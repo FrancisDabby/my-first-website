@@ -26,6 +26,7 @@
             --admin: #8e44ad;
             --premium: #ffd700;
             --chat: #3498db;
+            --mpesa: #00A650;
         }
 
         body {
@@ -168,6 +169,12 @@
             font-weight: 700;
         }
 
+        .btn-mpesa {
+            background: var(--mpesa);
+            color: var(--white);
+            font-weight: 600;
+        }
+
         .btn-chat {
             background: var(--chat);
             color: var(--white);
@@ -293,287 +300,155 @@
             color: var(--dark);
         }
 
-        /* Profiles Grid */
-        .profiles-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
-        }
-
-        .profile-card {
-            background: var(--white);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: all 0.3s;
-            border: 3px solid transparent;
-        }
-
-        .profile-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-            border-color: var(--primary);
-        }
-
-        .profile-card.premium {
-            border-color: var(--premium);
-            position: relative;
-        }
-
-        .premium-corner {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: var(--premium);
-            color: #000;
-            padding: 0.5rem 1rem;
-            border-radius: 15px;
-            font-weight: 600;
-            font-size: 0.8rem;
-            z-index: 2;
-        }
-
-        .profile-header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: var(--white);
-            padding: 2rem;
-            text-align: center;
-            position: relative;
-        }
-
-        .profile-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: var(--white);
-            margin: 0 auto 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            border: 4px solid var(--white);
-        }
-
-        .profile-name {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .profile-age {
-            opacity: 0.9;
-            font-size: 1rem;
-        }
-
-        .profile-body {
-            padding: 1.5rem;
-        }
-
-        .profile-info {
-            margin-bottom: 1rem;
-        }
-
-        .profile-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin: 1rem 0;
-        }
-
-        .tag {
-            background: var(--light);
-            padding: 0.3rem 0.8rem;
-            border-radius: 15px;
-            font-size: 0.9rem;
-            color: var(--dark);
-        }
-
-        .match-score {
-            background: var(--success);
-            color: var(--white);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-weight: 600;
-            text-align: center;
-            margin: 1rem 0;
-        }
-
-        .profile-actions {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .profile-actions .btn {
-            flex: 1;
-            padding: 0.8rem;
-            font-size: 0.9rem;
-        }
-
-        /* Chat System */
-        .chat-container {
+        /* Payment Modal */
+        .payment-modal {
             display: none;
-            height: 600px;
-            background: var(--white);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            backdrop-filter: blur(5px);
         }
 
-        .chat-header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: var(--white);
-            padding: 1.5rem;
-            text-align: center;
-        }
-
-        .chat-messages {
-            height: 400px;
-            padding: 1rem;
-            overflow-y: auto;
-            background: #f8f9fa;
-        }
-
-        .message {
-            margin-bottom: 1rem;
-            padding: 1rem;
-            border-radius: 15px;
-            max-width: 70%;
-        }
-
-        .message.sent {
-            background: var(--primary);
-            color: var(--white);
-            margin-left: auto;
-        }
-
-        .message.received {
-            background: var(--light);
-            color: var(--dark);
-        }
-
-        .chat-input {
-            display: flex;
-            padding: 1rem;
-            background: var(--white);
-            border-top: 1px solid #e9ecef;
-        }
-
-        .chat-input input {
-            flex: 1;
-            padding: 1rem;
-            border: 2px solid #e9ecef;
-            border-radius: 25px;
-            margin-right: 1rem;
-        }
-
-        /* Premium Features */
-        .premium-features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-
-        .feature-card {
+        .payment-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             background: var(--white);
             padding: 2rem;
-            border-radius: 15px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .payment-header {
             text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .payment-option {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
             border: 2px solid transparent;
         }
 
-        .feature-card.premium {
-            border-color: var(--premium);
+        .payment-option:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
         }
 
-        .feature-icon {
-            font-size: 3rem;
+        .payment-option.selected {
+            border-color: var(--primary);
+            background: rgba(46, 139, 87, 0.1);
+        }
+
+        .payment-icon {
+            font-size: 2rem;
             margin-bottom: 1rem;
         }
 
-        /* Admin Dashboard (Improved) */
-        .admin-dashboard {
+        .payment-details {
             display: none;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--white);
+            border-radius: 10px;
+            border: 1px solid #e9ecef;
         }
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .stat-card {
+        /* Admin Manual Upgrade */
+        .admin-upgrade-section {
             background: var(--white);
             padding: 2rem;
             border-radius: 15px;
-            text-align: center;
+            margin: 2rem 0;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            border-left: 5px solid var(--admin);
         }
 
-        .stat-icon {
-            font-size: 3rem;
+        .upgrade-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        /* Subscription Management */
+        .subscription-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 1rem 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--premium);
+        }
+
+        .subscription-status {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 1rem;
         }
 
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--admin);
+        .subscription-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .detail-item {
+            text-align: center;
+            padding: 1rem;
+            background: var(--light);
+            border-radius: 10px;
+        }
+
+        .detail-label {
+            font-size: 0.9rem;
+            color: #666;
             margin-bottom: 0.5rem;
         }
 
-        .stat-label {
-            color: #666;
+        .detail-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        /* Payment History */
+        .payment-history {
+            margin-top: 2rem;
+        }
+
+        .payment-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .payment-success {
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .payment-pending {
+            color: var(--warning);
             font-weight: 600;
         }
 
         /* Forms */
-        .auth-page {
-            display: none;
-            min-height: 100vh;
-            background: linear-gradient(135deg, var(--water) 0%, var(--primary) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-        }
-
-        .auth-container {
-            background: var(--white);
-            padding: 3rem;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 500px;
-        }
-
-        .auth-tabs {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            border-bottom: 2px solid #e9ecef;
-        }
-
-        .auth-tab {
-            padding: 1rem 2rem;
-            background: none;
-            border: none;
-            font-size: 1rem;
-            font-weight: 600;
-            color: #666;
-            cursor: pointer;
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s;
-        }
-
-        .auth-tab.active {
-            color: var(--primary);
-            border-bottom-color: var(--primary);
-        }
-
         .form-group {
             margin-bottom: 1.5rem;
         }
@@ -597,19 +472,6 @@
         .form-control:focus {
             outline: none;
             border-color: var(--primary);
-        }
-
-        .phone-input {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .phone-input select {
-            width: 100px;
-        }
-
-        .phone-input input {
-            flex: 1;
         }
 
         /* Notifications */
@@ -639,7 +501,7 @@
             background: var(--warning);
         }
 
-        /* Responsive */
+        /* Responsive Design */
         @media (max-width: 1024px) {
             .dashboard-grid {
                 grid-template-columns: 1fr;
@@ -660,7 +522,7 @@
                 gap: 1rem;
             }
 
-            .profiles-grid {
+            .upgrade-form {
                 grid-template-columns: 1fr;
             }
         }
@@ -672,26 +534,6 @@
             -webkit-text-fill-color: transparent;
             font-weight: bold;
         }
-
-        .admin-badge {
-            background: var(--admin);
-            color: var(--white);
-            padding: 0.3rem 0.8rem;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .user-status {
-            padding: 0.3rem 0.8rem;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .status-active { background: var(--success); color: white; }
-        .status-suspended { background: var(--danger); color: white; }
-        .status-pending { background: var(--warning); color: white; }
     </style>
 </head>
 <body>
@@ -711,9 +553,8 @@
             <ul class="nav-links" id="adminNav" style="display: none;">
                 <li><a href="#" onclick="showAdminTab('dashboard')">Dashboard</a></li>
                 <li><a href="#" onclick="showAdminTab('users')">Users</a></li>
-                <li><a href="#" onclick="showAdminTab('reports')">Reports</a></li>
-                <li><a href="#" onclick="showAdminTab('analytics')">Analytics</a></li>
                 <li><a href="#" onclick="showAdminTab('premium')">Premium</a></li>
+                <li><a href="#" onclick="showAdminTab('payments')">Payments</a></li>
             </ul>
             <div class="nav-actions">
                 <span id="userWelcome" style="display: none;"></span>
@@ -734,92 +575,10 @@
                 <p style="color: #666;">Find your perfect match in Kenya</p>
             </div>
 
-            <div class="auth-tabs">
-                <button class="auth-tab active" onclick="switchAuthTab('login')">Login</button>
-                <button class="auth-tab" onclick="switchAuthTab('register')">Register</button>
-            </div>
-            
-            <div class="auth-content active" id="loginTab">
-                <form id="loginForm" onsubmit="handleLogin(event)">
-                    <div class="form-group">
-                        <label class="form-label">Email or Phone</label>
-                        <input type="text" class="form-control" id="loginIdentifier" placeholder="Email or +254..." required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Password</label>
-                        <input type="password" class="form-control" id="loginPassword" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 1rem;">Login</button>
-                </form>
-                <div style="text-align: center; padding: 1rem; background: #f8f9fa; border-radius: 10px;">
-                    <p><strong>Demo Accounts:</strong></p>
-                    <p><strong>Admin:</strong> admin@wetlands.com / admin123</p>
-                    <p><strong>User:</strong> user@wetlands.com / user123</p>
-                    <p><strong>Phone:</strong> +254700000000 / user123</p>
-                </div>
-            </div>
-            
-            <div class="auth-content" id="registerTab">
-                <form id="registerForm" onsubmit="handleRegister(event)">
-                    <div class="form-group">
-                        <label class="form-label">Full Name</label>
-                        <input type="text" class="form-control" id="registerName" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Email</label>
-                        <input type="email" class="form-control" id="registerEmail" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Phone Number</label>
-                        <div class="phone-input">
-                            <select class="form-control" id="registerCountryCode">
-                                <option value="+254">+254 KE</option>
-                                <option value="+255">+255 TZ</option>
-                                <option value="+256">+256 UG</option>
-                                <option value="+257">+257 BI</option>
-                            </select>
-                            <input type="tel" class="form-control" id="registerPhone" placeholder="700000000" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Password</label>
-                        <input type="password" class="form-control" id="registerPassword" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Gender</label>
-                        <select class="form-control" id="registerGender" required>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                            <option value="undisclosed">Do Not Disclose</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Sexuality</label>
-                        <select class="form-control" id="registerSexuality" required>
-                            <option value="straight">Straight</option>
-                            <option value="bisexual">Bisexual</option>
-                            <option value="gay">Gay</option>
-                            <option value="lesbian">Lesbian</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Age</label>
-                        <input type="number" class="form-control" id="registerAge" min="18" max="100" required>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Location</label>
-                        <select class="form-control" id="registerLocation" required>
-                            <option value="nairobi">Nairobi</option>
-                            <option value="mombasa">Mombasa</option>
-                            <option value="kisumu">Kisumu</option>
-                            <option value="nakuru">Nakuru</option>
-                            <option value="eldoret">Eldoret</option>
-                            <option value="foreigner">Foreigner</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-success" style="width: 100%;">Create Account</button>
-                </form>
+            <!-- Login/Register forms would be here -->
+            <div style="text-align: center;">
+                <button class="btn btn-primary" onclick="demoLogin('user')">Demo User Login</button>
+                <button class="btn btn-admin" onclick="demoLogin('admin')" style="margin-left: 1rem;">Demo Admin Login</button>
             </div>
         </div>
     </section>
@@ -835,102 +594,75 @@
                         <div class="user-name" id="sidebarUserName">User Name</div>
                         <div class="user-location" id="sidebarUserLocation">Location</div>
                         <div class="premium-badge" id="premiumStatus" style="display: none;">🌟 PREMIUM MEMBER</div>
-                        <button class="btn btn-premium" onclick="showUserSection('premium')" style="width: 100%;" id="upgradeBtn">Upgrade to Premium</button>
+                        <button class="btn btn-premium" onclick="showPaymentModal()" style="width: 100%;" id="upgradeBtn">Upgrade to Premium</button>
                     </div>
                     
                     <ul class="sidebar-nav">
                         <li><a href="#" class="active" onclick="showUserSection('discover')">🔍 Discover</a></li>
                         <li><a href="#" onclick="showUserSection('matches')">💕 My Matches</a></li>
                         <li><a href="#" onclick="showUserSection('messages')">💬 Messages</a></li>
-                        <li><a href="#" onclick="showUserSection('profile')">👤 My Profile</a></li>
-                        <li><a href="#" onclick="showUserSection('premium')">🌟 Go Premium</a></li>
+                        <li><a href="#" onclick="showUserSection('premium')">🌟 Subscription</a></li>
                         <li><a href="#" onclick="showUserSection('settings')">⚙️ Settings</a></li>
                     </ul>
                 </div>
 
                 <!-- Main Content Area -->
                 <div class="main-content-area">
-                    <!-- Discover Section -->
-                    <div class="content-section active" id="discoverSection">
+                    <!-- Premium/Subscription Section -->
+                    <div class="content-section active" id="premiumSection">
                         <div class="content-header">
-                            <h2 class="content-title">Discover Profiles</h2>
-                            <div class="filters">
-                                <select class="form-control" id="discoverFilter" onchange="filterDiscoverProfiles()" style="width: 200px;">
-                                    <option value="all">All Profiles</option>
-                                    <option value="premium">Premium Only</option>
-                                    <option value="nearby">Near Me</option>
-                                    <option value="online">Online Now</option>
-                                </select>
-                            </div>
+                            <h2 class="content-title">Your Subscription</h2>
                         </div>
-                        <div class="profiles-grid" id="discoverGrid">
-                            <!-- Profiles will be loaded here -->
-                        </div>
-                    </div>
 
-                    <!-- Matches Section -->
-                    <div class="content-section" id="matchesSection">
-                        <div class="content-header">
-                            <h2 class="content-title">Your Matches</h2>
-                        </div>
-                        <div class="profiles-grid" id="matchesGrid">
-                            <!-- Matches will be loaded here -->
-                        </div>
-                    </div>
+                        <!-- Current Subscription Status -->
+                        <div class="subscription-card">
+                            <div class="subscription-status">
+                                <h3>Current Plan</h3>
+                                <span id="currentPlan" class="premium-badge" style="display: none;">Premium</span>
+                                <span id="basicPlan" style="background: #666; color: white; padding: 0.5rem 1rem; border-radius: 20px; font-weight: 600;">Basic</span>
+                            </div>
+                            
+                            <div class="subscription-details">
+                                <div class="detail-item">
+                                    <div class="detail-label">Status</div>
+                                    <div class="detail-value" id="subscriptionStatus">Inactive</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Since</div>
+                                    <div class="detail-value" id="subscriptionSince">-</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Renews</div>
+                                    <div class="detail-value" id="subscriptionRenews">-</div>
+                                </div>
+                                <div class="detail-item">
+                                    <div class="detail-label">Price</div>
+                                    <div class="detail-value">KSh 999/month</div>
+                                </div>
+                            </div>
 
-                    <!-- Messages Section -->
-                    <div class="content-section" id="messagesSection">
-                        <div class="content-header">
-                            <h2 class="content-title">Messages</h2>
-                        </div>
-                        <div id="conversationsList">
-                            <!-- Conversations will be listed here -->
-                        </div>
-                        <div class="chat-container" id="chatContainer">
-                            <div class="chat-header">
-                                <h3 id="chatWithName">Chat with User</h3>
-                            </div>
-                            <div class="chat-messages" id="chatMessages">
-                                <!-- Messages will be loaded here -->
-                            </div>
-                            <div class="chat-input">
-                                <input type="text" id="messageInput" placeholder="Type your message...">
-                                <button class="btn btn-chat" onclick="sendMessage()">Send</button>
+                            <div style="margin-top: 2rem; text-align: center;">
+                                <button class="btn btn-premium" onclick="showPaymentModal()" id="upgradeActionBtn">
+                                    Upgrade to Premium
+                                </button>
+                                <button class="btn btn-danger" onclick="cancelSubscription()" id="cancelBtn" style="display: none; margin-left: 1rem;">
+                                    Cancel Subscription
+                                </button>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Premium Section -->
-                    <div class="content-section" id="premiumSection">
-                        <div class="content-header">
-                            <h2 class="content-title">Go Premium</h2>
-                        </div>
-                        <div class="premium-features">
-                            <div class="feature-card premium">
-                                <div class="feature-icon">🚀</div>
-                                <h3>Priority Visibility</h3>
-                                <p>Get shown to more potential matches first</p>
+                        <!-- Payment History -->
+                        <div class="payment-history">
+                            <h3 style="margin-bottom: 1rem;">Payment History</h3>
+                            <div id="paymentHistoryList">
+                                <div class="payment-item">
+                                    <div>
+                                        <div style="font-weight: 600;">Premium Subscription</div>
+                                        <div style="color: #666; font-size: 0.9rem;">January 15, 2024</div>
+                                    </div>
+                                    <div class="payment-success">KSh 999</div>
+                                </div>
                             </div>
-                            <div class="feature-card premium">
-                                <div class="feature-icon">💬</div>
-                                <h3>Unlimited Messages</h3>
-                                <p>Chat with all your matches without limits</p>
-                            </div>
-                            <div class="feature-card premium">
-                                <div class="feature-icon">🔍</div>
-                                <h3>Advanced Filters</h3>
-                                <p>Filter by income, education, and more</p>
-                            </div>
-                            <div class="feature-card premium">
-                                <div class="feature-icon">👀</div>
-                                <h3>See Who Liked You</h3>
-                                <p>Know who's interested before you match</p>
-                            </div>
-                        </div>
-                        <div style="text-align: center; margin-top: 3rem;">
-                            <button class="btn btn-premium" style="padding: 1.5rem 3rem; font-size: 1.2rem;">
-                                Upgrade to Premium - KSh 999/month
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -941,88 +673,8 @@
     <!-- Admin Dashboard -->
     <div class="admin-dashboard" id="adminDashboard">
         <div class="container">
-            <!-- Dashboard Tab -->
-            <div class="content-section active" id="adminDashboardTab">
-                <h2 class="content-title">Admin Dashboard</h2>
-                
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-icon">👥</div>
-                        <div class="stat-number" id="totalUsers">0</div>
-                        <div class="stat-label">Total Users</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">❤️</div>
-                        <div class="stat-number" id="totalMatches">0</div>
-                        <div class="stat-label">Total Matches</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">💰</div>
-                        <div class="stat-number" id="premiumUsers">0</div>
-                        <div class="stat-label">Premium Users</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">📈</div>
-                        <div class="stat-number" id="revenue">KSh 0</div>
-                        <div class="stat-label">Monthly Revenue</div>
-                    </div>
-                </div>
-
-                <h3 style="margin: 2rem 0 1rem 0;">Recent Activity</h3>
-                <div class="data-table-container">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>User</th>
-                                <th>Action</th>
-                                <th>Time</th>
-                                <th>Details</th>
-                            </tr>
-                        </thead>
-                        <tbody id="recentActivity">
-                            <!-- Activity will be loaded here -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Users Management Tab -->
-            <div class="content-section" id="adminUsersTab">
-                <h2 class="content-title">User Management</h2>
-                
-                <div class="filters" style="margin-bottom: 2rem;">
-                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                        <select class="form-control" id="adminFilterStatus" onchange="filterAdminUsers()">
-                            <option value="all">All Users</option>
-                            <option value="active">Active</option>
-                            <option value="premium">Premium</option>
-                            <option value="suspended">Suspended</option>
-                        </select>
-                        <input type="text" class="form-control" id="adminSearch" placeholder="Search users..." style="width: 300px;">
-                    </div>
-                </div>
-
-                <div class="data-table-container">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>User</th>
-                                <th>Contact</th>
-                                <th>Location</th>
-                                <th>Status</th>
-                                <th>Membership</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="adminUsersTable">
-                            <!-- Users will be loaded here -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
             <!-- Premium Management Tab -->
-            <div class="content-section" id="adminPremiumTab">
+            <div class="content-section active" id="adminPremiumTab">
                 <h2 class="content-title">Premium Management</h2>
                 
                 <div class="stats-grid">
@@ -1048,6 +700,44 @@
                     </div>
                 </div>
 
+                <!-- Manual Upgrade Section -->
+                <div class="admin-upgrade-section">
+                    <h3 style="margin-bottom: 1rem;">Manual User Upgrade</h3>
+                    <div class="upgrade-form">
+                        <div class="form-group">
+                            <label class="form-label">Select User</label>
+                            <select class="form-control" id="adminUserSelect">
+                                <option value="">Choose a user...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Plan Duration</label>
+                            <select class="form-control" id="adminPlanDuration">
+                                <option value="1">1 Month - KSh 999</option>
+                                <option value="3">3 Months - KSh 2,697</option>
+                                <option value="6">6 Months - KSh 4,794</option>
+                                <option value="12">12 Months - KSh 8,988</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Payment Method</label>
+                        <select class="form-control" id="adminPaymentMethod">
+                            <option value="manual">Manual Payment</option>
+                            <option value="mpesa">M-Pesa</option>
+                            <option value="card">Credit Card</option>
+                            <option value="bank">Bank Transfer</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Transaction ID (Optional)</label>
+                        <input type="text" class="form-control" id="adminTransactionId" placeholder="e.g., MPS123456789">
+                    </div>
+                    <button class="btn btn-success" onclick="adminManualUpgrade()" style="width: 100%;">
+                        Upgrade User Manually
+                    </button>
+                </div>
+
                 <h3 style="margin: 2rem 0 1rem 0;">Premium Subscribers</h3>
                 <div class="data-table-container">
                     <table class="data-table">
@@ -1056,9 +746,10 @@
                                 <th>User</th>
                                 <th>Plan</th>
                                 <th>Started</th>
-                                <th>Renews</th>
+                                <th>Expires</th>
                                 <th>Payment</th>
                                 <th>Status</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody id="premiumSubscribersTable">
@@ -1067,6 +758,126 @@
                     </table>
                 </div>
             </div>
+
+            <!-- Payments Tab -->
+            <div class="content-section" id="adminPaymentsTab">
+                <h2 class="content-title">Payment Management</h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">💳</div>
+                        <div class="stat-number" id="totalPayments">0</div>
+                        <div class="stat-label">Total Payments</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">✅</div>
+                        <div class="stat-number" id="successfulPayments">0</div>
+                        <div class="stat-label">Successful</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">⏳</div>
+                        <div class="stat-number" id="pendingPayments">0</div>
+                        <div class="stat-label">Pending</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">❌</div>
+                        <div class="stat-number" id="failedPayments">0</div>
+                        <div class="stat-label">Failed</div>
+                    </div>
+                </div>
+
+                <h3 style="margin: 2rem 0 1rem 0;">Recent Payments</h3>
+                <div class="data-table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Amount</th>
+                                <th>Method</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Transaction ID</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="paymentsTable">
+                            <!-- Payments will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div class="payment-modal" id="paymentModal">
+        <div class="payment-content">
+            <div class="payment-header">
+                <h2 style="color: var(--dark); margin-bottom: 0.5rem;">Upgrade to Premium</h2>
+                <p style="color: #666;">Choose your payment method</p>
+            </div>
+
+            <div class="payment-option" onclick="selectPaymentOption('mpesa')">
+                <div class="payment-icon">📱</div>
+                <h3 style="margin-bottom: 0.5rem;">M-Pesa</h3>
+                <p style="color: #666; margin-bottom: 1rem;">Pay via M-Pesa mobile money</p>
+                <div class="payment-details" id="mpesaDetails">
+                    <div class="form-group">
+                        <label class="form-label">Phone Number</label>
+                        <input type="tel" class="form-control" id="mpesaPhone" placeholder="+2547XXXXXXXX" value="+254700000000">
+                    </div>
+                    <button class="btn btn-mpesa" onclick="processMpesaPayment()" style="width: 100%;">
+                        Pay KSh 999 via M-Pesa
+                    </button>
+                </div>
+            </div>
+
+            <div class="payment-option" onclick="selectPaymentOption('card')">
+                <div class="payment-icon">💳</div>
+                <h3 style="margin-bottom: 0.5rem;">Credit/Debit Card</h3>
+                <p style="color: #666; margin-bottom: 1rem;">Pay with your card securely</p>
+                <div class="payment-details" id="cardDetails">
+                    <div class="form-group">
+                        <label class="form-label">Card Number</label>
+                        <input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9012 3456">
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label class="form-label">Expiry Date</label>
+                            <input type="text" class="form-control" id="cardExpiry" placeholder="MM/YY">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">CVV</label>
+                            <input type="text" class="form-control" id="cardCvv" placeholder="123">
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="processCardPayment()" style="width: 100%;">
+                        Pay KSh 999
+                    </button>
+                </div>
+            </div>
+
+            <div class="payment-option" onclick="selectPaymentOption('manual')">
+                <div class="payment-icon">🏦</div>
+                <h3 style="margin-bottom: 0.5rem;">Manual Payment</h3>
+                <p style="color: #666; margin-bottom: 1rem;">Bank transfer or other methods</p>
+                <div class="payment-details" id="manualDetails">
+                    <div style="background: #f8f9fa; padding: 1rem; border-radius: 10px; margin-bottom: 1rem;">
+                        <p><strong>Bank Details:</strong></p>
+                        <p>Bank: Equity Bank Kenya</p>
+                        <p>Account: 1234567890</p>
+                        <p>Name: Wetlands Premium Ltd</p>
+                        <p>Amount: KSh 999</p>
+                    </div>
+                    <button class="btn btn-outline" onclick="processManualPayment()" style="width: 100%;">
+                        I have made the payment
+                    </button>
+                </div>
+            </div>
+
+            <button class="btn btn-danger" onclick="closePaymentModal()" style="width: 100%; margin-top: 1rem;">
+                Cancel
+            </button>
         </div>
     </div>
 
@@ -1074,18 +885,11 @@
     <div id="notificationContainer"></div>
 
     <script>
-        // Wetlands Premium Platform - Complete with All Features
+        // Enhanced Wetlands Premium with Payment System
         let currentUser = null;
         let allProfiles = [];
-        let matches = [];
-        let conversations = {};
-        let adminData = {
-            users: [],
-            reports: [],
-            activity: [],
-            premiumSubscribers: [],
-            analytics: {}
-        };
+        let payments = [];
+        let subscriptions = [];
 
         // Initialize the platform
         function initPlatform() {
@@ -1094,223 +898,99 @@
         }
 
         function loadSampleData() {
-            // Sample profiles with premium status
+            // Sample users
             allProfiles = [
                 {
                     id: 1,
                     name: "Wanjiku Mwangi",
-                    age: 28,
-                    gender: "female",
-                    sexuality: "straight",
-                    location: "nairobi",
-                    bio: "Nairobi-based accountant who loves hiking Ngong Hills and trying new restaurants in Westlands.",
-                    interests: ["hiking", "travel", "food", "netflix"],
-                    goal: "relationship",
-                    education: "university",
-                    avatar: "👩",
-                    status: "active",
-                    isPremium: true,
+                    email: "wanjiku@example.com",
                     phone: "+254711000001",
-                    joined: "2024-01-15",
-                    matches: 12
+                    isPremium: true,
+                    premiumSince: "2024-01-15",
+                    premiumExpires: "2024-02-15"
                 },
                 {
                     id: 2,
-                    name: "Kamau Otieno",
-                    age: 32,
-                    gender: "male",
-                    sexuality: "straight",
-                    location: "mombasa",
-                    bio: "Mombasa tour guide who enjoys beach life and Swahili culture. Hakuna matata!",
-                    interests: ["beach", "travel", "culture", "music"],
-                    goal: "dating",
-                    education: "college",
-                    avatar: "👨",
-                    status: "active",
-                    isPremium: false,
+                    name: "Kamau Otieno", 
+                    email: "kamau@example.com",
                     phone: "+254711000002",
-                    joined: "2024-01-10",
-                    matches: 8
+                    isPremium: false
                 },
                 {
                     id: 3,
                     name: "Akeyo Atieno",
-                    age: 25,
-                    gender: "female",
-                    sexuality: "bisexual",
-                    location: "kisumu",
-                    bio: "Kisumu teacher who loves lake activities and community work. Let's explore life together!",
-                    interests: ["lake", "teaching", "community", "reading"],
-                    goal: "relationship",
-                    education: "university",
-                    avatar: "💁",
-                    status: "active",
-                    isPremium: true,
+                    email: "akeyo@example.com", 
                     phone: "+254711000003",
-                    joined: "2024-01-20",
-                    matches: 15
+                    isPremium: true,
+                    premiumSince: "2024-01-20",
+                    premiumExpires: "2024-02-20"
                 }
             ];
 
-            // Sample matches
-            matches = [allProfiles[0], allProfiles[2]];
-
-            // Sample conversations
-            conversations = {
-                1: [
-                    { type: "received", text: "Hi there! I saw we matched 😊", time: "10:30 AM" },
-                    { type: "sent", text: "Hello! Yes, your profile caught my eye!", time: "10:32 AM" },
-                    { type: "received", text: "That's great! What do you enjoy doing in Nairobi?", time: "10:35 AM" }
-                ],
-                3: [
-                    { type: "received", text: "Hey! Love your profile picture 🌟", time: "09:15 AM" },
-                    { type: "sent", text: "Thank you! Yours is lovely too!", time: "09:20 AM" }
-                ]
-            };
-
-            // Admin data
-            adminData.users = [...allProfiles];
-            adminData.premiumSubscribers = allProfiles.filter(p => p.isPremium);
-            adminData.activity = [
-                { user: "Wanjiku Mwangi", action: "Upgraded to Premium", time: "2 hours ago", details: "Monthly subscription" },
-                { user: "Kamau Otieno", action: "New Match", time: "1 hour ago", details: "Matched with Akeyo Atieno" },
-                { user: "Akeyo Atieno", action: "Sent Message", time: "45 minutes ago", details: "To Wanjiku Mwangi" }
+            // Sample payments
+            payments = [
+                {
+                    id: 1,
+                    userId: 1,
+                    amount: 999,
+                    method: "mpesa",
+                    status: "completed",
+                    date: "2024-01-15",
+                    transactionId: "MPE123456789"
+                },
+                {
+                    id: 2, 
+                    userId: 3,
+                    amount: 999,
+                    method: "card",
+                    status: "completed",
+                    date: "2024-01-20",
+                    transactionId: "CARD987654321"
+                }
             ];
 
             // Add admin user
-            adminData.users.push({
+            allProfiles.push({
                 id: 999,
                 name: "System Admin",
                 email: "admin@wetlands.com",
                 role: "admin",
-                status: "active",
-                isPremium: true,
-                joined: "2024-01-01"
+                isPremium: true
             });
         }
 
-        // Authentication Functions
-        function showAuthPage() {
-            document.getElementById('authPage').style.display = 'flex';
-            document.getElementById('userDashboard').style.display = 'none';
-            document.getElementById('adminDashboard').style.display = 'none';
-        }
-
-        function switchAuthTab(tab) {
-            document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.auth-content').forEach(t => t.classList.remove('active'));
-            
-            event.target.classList.add('active');
-            document.getElementById(tab + 'Tab').classList.add('active');
-        }
-
-        function handleLogin(event) {
-            event.preventDefault();
-            const identifier = document.getElementById('loginIdentifier').value;
-            const password = document.getElementById('loginPassword').value;
-
-            // Check for admin
-            if (identifier === 'admin@wetlands.com' && password === 'admin123') {
+        // Demo login function
+        function demoLogin(role) {
+            if (role === 'admin') {
                 currentUser = {
                     id: 999,
                     name: "System Admin",
-                    email: 'admin@wetlands.com',
+                    email: "admin@wetlands.com",
                     role: "admin",
                     isPremium: true
                 };
                 activateAdminMode();
                 showNotification('Welcome Admin! 🛡️', 'success');
-                return;
-            }
-
-            // Check for demo user
-            if ((identifier === 'user@wetlands.com' || identifier === '+254700000000') && password === 'user123') {
+            } else {
                 currentUser = {
-                    id: 100,
-                    name: "Demo User",
-                    email: 'user@wetlands.com',
-                    phone: '+254700000000',
+                    id: 1,
+                    name: "Wanjiku Mwangi",
+                    email: "wanjiku@example.com",
+                    phone: "+254711000001",
                     age: 28,
-                    gender: 'undisclosed',
-                    sexuality: 'straight',
-                    location: 'nairobi',
-                    bio: 'Exploring meaningful connections in Kenya.',
-                    interests: ['travel', 'music', 'technology'],
-                    goal: 'relationship',
-                    education: 'university',
-                    role: 'user',
-                    status: 'active',
-                    isPremium: false,
-                    joined: '2024-01-25',
-                    matches: 3
+                    gender: "female",
+                    location: "nairobi",
+                    isPremium: true,
+                    premiumSince: "2024-01-15",
+                    premiumExpires: "2024-02-15",
+                    role: "user"
                 };
                 activateUserMode();
                 showNotification('Karibu back to Wetlands! 🎉', 'success');
-                return;
             }
-
-            // Check phone login
-            const phoneUser = adminData.users.find(u => u.phone === identifier);
-            if (phoneUser && password === 'user123') {
-                currentUser = phoneUser;
-                activateUserMode();
-                showNotification('Karibu back! 📱', 'success');
-                return;
-            }
-
-            showNotification('Invalid login credentials', 'error');
-        }
-
-        function handleRegister(event) {
-            event.preventDefault();
-            const name = document.getElementById('registerName').value;
-            const email = document.getElementById('registerEmail').value;
-            const countryCode = document.getElementById('registerCountryCode').value;
-            const phone = countryCode + document.getElementById('registerPhone').value;
-            const password = document.getElementById('registerPassword').value;
-            const gender = document.getElementById('registerGender').value;
-            const sexuality = document.getElementById('registerSexuality').value;
-            const age = document.getElementById('registerAge').value;
-            const location = document.getElementById('registerLocation').value;
-
-            currentUser = {
-                id: Date.now(),
-                name: name,
-                email: email,
-                phone: phone,
-                age: parseInt(age),
-                gender: gender,
-                sexuality: sexuality,
-                location: location,
-                bio: '',
-                interests: [],
-                goal: 'dating',
-                education: 'college',
-                role: 'user',
-                status: 'active',
-                isPremium: false,
-                joined: new Date().toISOString().split('T')[0],
-                matches: 0,
-                avatar: gender === 'male' ? '👨' : gender === 'female' ? '👩' : '👤'
-            };
-
-            // Add to system
-            allProfiles.push(currentUser);
-            adminData.users.push(currentUser);
-            adminData.activity.unshift({
-                user: name,
-                action: "Registered",
-                time: "Just now",
-                details: `New user from ${location}`
-            });
-
-            activateUserMode();
-            showNotification('Account created successfully! Karibu to Wetlands! 🎉', 'success');
         }
 
         function activateUserMode() {
-            document.body.classList.remove('admin-mode');
-            document.getElementById('mainHeader').classList.remove('admin-header');
             document.getElementById('authPage').style.display = 'none';
             document.getElementById('userDashboard').style.display = 'block';
             document.getElementById('adminDashboard').style.display = 'none';
@@ -1318,32 +998,16 @@
             document.getElementById('adminNav').style.display = 'none';
             document.getElementById('authBtn').style.display = 'none';
             document.getElementById('premiumBtn').style.display = 'inline-block';
-            document.getElementById('adminBtn').style.display = 'none';
             document.getElementById('logoutBtn').style.display = 'inline-block';
-            document.getElementById('adminBadge').style.display = 'none';
             document.getElementById('userWelcome').style.display = 'inline';
             document.getElementById('userWelcome').textContent = `Habari, ${currentUser.name}!`;
 
-            // Update sidebar
-            document.getElementById('sidebarUserName').textContent = currentUser.name;
-            document.getElementById('sidebarUserLocation').textContent = currentUser.location.charAt(0).toUpperCase() + currentUser.location.slice(1);
-            document.getElementById('userAvatar').textContent = currentUser.avatar;
-            
-            if (currentUser.isPremium) {
-                document.getElementById('premiumStatus').style.display = 'inline-block';
-                document.getElementById('upgradeBtn').style.display = 'none';
-            } else {
-                document.getElementById('premiumStatus').style.display = 'none';
-                document.getElementById('upgradeBtn').style.display = 'block';
-            }
-
-            showUserSection('discover');
-            loadUserData();
+            // Update user interface
+            updateUserSubscriptionDisplay();
         }
 
         function activateAdminMode() {
             document.body.classList.add('admin-mode');
-            document.getElementById('mainHeader').classList.add('admin-header');
             document.getElementById('authPage').style.display = 'none';
             document.getElementById('userDashboard').style.display = 'none';
             document.getElementById('adminDashboard').style.display = 'block';
@@ -1351,363 +1015,32 @@
             document.getElementById('adminNav').style.display = 'flex';
             document.getElementById('authBtn').style.display = 'none';
             document.getElementById('premiumBtn').style.display = 'none';
-            document.getElementById('adminBtn').style.display = 'none';
             document.getElementById('logoutBtn').style.display = 'inline-block';
             document.getElementById('adminBadge').style.display = 'inline-block';
             document.getElementById('userWelcome').style.display = 'inline';
             document.getElementById('userWelcome').textContent = `Admin: ${currentUser.name}`;
             
             loadAdminDashboard();
-            showAdminTab('dashboard');
+            showAdminTab('premium');
         }
 
         function logout() {
             currentUser = null;
             document.body.classList.remove('admin-mode');
-            document.getElementById('mainHeader').classList.remove('admin-header');
             showAuthPage();
             showNotification('Logged out successfully. Kwaheri!', 'success');
         }
 
-        // User Functions
-        function showUserSection(section) {
-            document.querySelectorAll('.content-section').forEach(sec => {
-                sec.style.display = 'none';
-            });
-            document.querySelectorAll('.sidebar-nav a').forEach(link => {
-                link.classList.remove('active');
-            });
+        function showAuthPage() {
+            document.getElementById('authPage').style.display = 'flex';
+            document.getElementById('userDashboard').style.display = 'none';
+            document.getElementById('adminDashboard').style.display = 'none';
+        }
+
+        // User Subscription Management
+        function updateUserSubscriptionDisplay() {
+            const isPremium = currentUser.isPremium;
             
-            document.getElementById(section + 'Section').style.display = 'block';
-            event.target.classList.add('active');
-
-            if (section === 'discover') loadDiscoverProfiles();
-            if (section === 'matches') loadMatches();
-            if (section === 'messages') loadConversations();
-        }
-
-        function loadUserData() {
-            loadDiscoverProfiles();
-            loadMatches();
-            loadConversations();
-        }
-
-        function loadDiscoverProfiles() {
-            const grid = document.getElementById('discoverGrid');
-            grid.innerHTML = '';
-
-            allProfiles.forEach(profile => {
-                if (currentUser && (profile.id === currentUser.id || matches.find(m => m.id === profile.id))) return;
-                
-                const matchScore = calculateMatchScore(profile);
-                const profileCard = createProfileCard(profile, matchScore);
-                grid.innerHTML += profileCard;
-            });
-        }
-
-        function createProfileCard(profile, matchScore) {
-            const locationNames = {
-                'nairobi': 'Nairobi', 'mombasa': 'Mombasa', 'kisumu': 'Kisumu', 
-                'nakuru': 'Nakuru', 'eldoret': 'Eldoret', 'foreigner': 'Foreigner'
-            };
-
-            return `
-                <div class="profile-card ${profile.isPremium ? 'premium' : ''}">
-                    ${profile.isPremium ? '<div class="premium-corner">PREMIUM</div>' : ''}
-                    <div class="profile-header">
-                        <div class="profile-avatar">${profile.avatar}</div>
-                        <div class="profile-name">${profile.name}</div>
-                        <div class="profile-age">${profile.age} years • ${locationNames[profile.location]}</div>
-                    </div>
-                    <div class="profile-body">
-                        <div class="profile-info">
-                            <p>${profile.bio}</p>
-                        </div>
-                        
-                        <div class="match-score">
-                            ${matchScore}% Match
-                        </div>
-                        
-                        <div class="profile-tags">
-                            ${profile.interests.map(interest => `<span class="tag">${interest}</span>`).join('')}
-                        </div>
-                        
-                        <div class="profile-actions">
-                            <button class="btn btn-primary" onclick="sendLike(${profile.id})">❤️ Like</button>
-                            <button class="btn btn-outline" onclick="viewProfile(${profile.id})">View</button>
-                            ${currentUser.isPremium ? `<button class="btn btn-chat" onclick="startChat(${profile.id})">💬 Chat</button>` : ''}
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        function calculateMatchScore(profile) {
-            if (!currentUser) return Math.floor(Math.random() * 30) + 50;
-            
-            let score = 0;
-            const maxScore = 100;
-
-            // Age compatibility (15 points)
-            const ageDiff = Math.abs((currentUser.age || 25) - profile.age);
-            if (ageDiff <= 5) score += 15;
-            else if (ageDiff <= 10) score += 8;
-
-            // Location compatibility (20 points)
-            if (currentUser.location === profile.location) score += 20;
-
-            // Interests compatibility (30 points)
-            const commonInterests = currentUser.interests.filter(interest => 
-                profile.interests.includes(interest)
-            ).length;
-            score += (commonInterests / Math.max(currentUser.interests.length, 1)) * 30;
-
-            // Goal compatibility (20 points)
-            if (currentUser.goal === profile.goal) score += 20;
-
-            // Education compatibility (15 points)
-            if (currentUser.education === profile.education) score += 15;
-
-            return Math.min(Math.floor(score), 95);
-        }
-
-        function sendLike(profileId) {
-            const profile = allProfiles.find(p => p.id === profileId);
-            showNotification(`❤️ You liked ${profile.name}!`, 'success');
-            
-            // Simulate match
-            if (Math.random() > 0.5) {
-                if (!matches.find(m => m.id === profileId)) {
-                    matches.push(profile);
-                    showNotification(`🎉 It's a match! You and ${profile.name} like each other!`, 'success');
-                    
-                    // Start conversation
-                    if (!conversations[profileId]) {
-                        conversations[profileId] = [
-                            { type: "system", text: "You matched! Start a conversation", time: new Date().toLocaleTimeString() }
-                        ];
-                    }
-                }
-            }
-        }
-
-        function startChat(profileId) {
-            if (!currentUser.isPremium) {
-                showNotification('Upgrade to Premium to start chatting!', 'warning');
-                showUserSection('premium');
-                return;
-            }
-
-            const profile = allProfiles.find(p => p.id === profileId);
-            document.getElementById('chatWithName').textContent = `Chat with ${profile.name}`;
-            document.getElementById('chatContainer').style.display = 'block';
-            
-            // Load messages
-            const chatMessages = document.getElementById('chatMessages');
-            chatMessages.innerHTML = '';
-            
-            if (conversations[profileId]) {
-                conversations[profileId].forEach(msg => {
-                    const messageDiv = document.createElement('div');
-                    messageDiv.className = `message ${msg.type === 'sent' ? 'sent' : msg.type === 'system' ? 'system' : 'received'}`;
-                    messageDiv.textContent = msg.text;
-                    chatMessages.appendChild(messageDiv);
-                });
-            }
-            
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
-        function sendMessage() {
-            const input = document.getElementById('messageInput');
-            const message = input.value.trim();
-            
-            if (message) {
-                const chatMessages = document.getElementById('chatMessages');
-                const messageDiv = document.createElement('div');
-                messageDiv.className = 'message sent';
-                messageDiv.textContent = message;
-                chatMessages.appendChild(messageDiv);
-                
-                input.value = '';
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-                
-                // Simulate reply
-                setTimeout(() => {
-                    const replyDiv = document.createElement('div');
-                    replyDiv.className = 'message received';
-                    replyDiv.textContent = "That's interesting! Tell me more...";
-                    chatMessages.appendChild(replyDiv);
-                    chatMessages.scrollTop = chatMessages.scrollHeight;
-                }, 1000);
-            }
-        }
-
-        function loadMatches() {
-            const grid = document.getElementById('matchesGrid');
-            grid.innerHTML = '';
-
-            if (matches.length === 0) {
-                grid.innerHTML = '<p style="text-align: center; color: #666; font-size: 1.2rem; grid-column: 1/-1; padding: 3rem;">No matches yet. Start liking profiles to find matches! ❤️</p>';
-                return;
-            }
-
-            matches.forEach(profile => {
-                const matchScore = calculateMatchScore(profile);
-                const profileCard = createProfileCard(profile, matchScore);
-                grid.innerHTML += profileCard;
-            });
-        }
-
-        function loadConversations() {
-            const list = document.getElementById('conversationsList');
-            list.innerHTML = '';
-
-            Object.keys(conversations).forEach(profileId => {
-                const profile = allProfiles.find(p => p.id === parseInt(profileId));
-                if (profile) {
-                    const lastMessage = conversations[profileId][conversations[profileId].length - 1];
-                    const convoDiv = document.createElement('div');
-                    convoDiv.className = 'profile-card';
-                    convoDiv.innerHTML = `
-                        <div style="display: flex; align-items: center; padding: 1rem; cursor: pointer;" onclick="startChat(${profileId})">
-                            <div class="profile-avatar" style="width: 50px; height: 50px; font-size: 1.5rem; margin-right: 1rem;">${profile.avatar}</div>
-                            <div style="flex: 1;">
-                                <div style="font-weight: 600;">${profile.name}</div>
-                                <div style="color: #666; font-size: 0.9rem;">${lastMessage.text}</div>
-                            </div>
-                        </div>
-                    `;
-                    list.appendChild(convoDiv);
-                }
-            });
-        }
-
-        // Admin Functions
-        function showAdminPanel() {
-            if (currentUser && currentUser.role === 'admin') {
-                activateAdminMode();
-            }
-        }
-
-        function showAdminTab(tabName) {
-            document.querySelectorAll('.content-section').forEach(tab => {
-                tab.style.display = 'none';
-            });
-            
-            document.getElementById('admin' + tabName.charAt(0).toUpperCase() + tabName.slice(1) + 'Tab').style.display = 'block';
-            
-            if (tabName === 'dashboard') loadAdminDashboard();
-            if (tabName === 'users') loadAdminUsers();
-            if (tabName === 'premium') loadAdminPremium();
-        }
-
-        function loadAdminDashboard() {
-            document.getElementById('totalUsers').textContent = adminData.users.length;
-            document.getElementById('totalMatches').textContent = adminData.users.reduce((sum, user) => sum + (user.matches || 0), 0);
-            document.getElementById('premiumUsers').textContent = adminData.premiumSubscribers.length;
-            document.getElementById('revenue').textContent = 'KSh ' + (adminData.premiumSubscribers.length * 999).toLocaleString();
-
-            const activityHtml = adminData.activity.map(activity => `
-                <tr>
-                    <td>${activity.user}</td>
-                    <td>${activity.action}</td>
-                    <td>${activity.time}</td>
-                    <td>${activity.details}</td>
-                </tr>
-            `).join('');
-            document.getElementById('recentActivity').innerHTML = activityHtml;
-        }
-
-        function loadAdminUsers() {
-            const usersHtml = adminData.users.map(user => {
-                const statusClass = `status-${user.status}`;
-                const membership = user.isPremium ? '🌟 Premium' : 'Basic';
-                return `
-                    <tr>
-                        <td>
-                            <strong>${user.name}</strong><br>
-                            <small>${user.email}</small>
-                        </td>
-                        <td>${user.phone || 'N/A'}</td>
-                        <td>${user.location}</td>
-                        <td><span class="user-status ${statusClass}">${user.status}</span></td>
-                        <td>${membership}</td>
-                        <td>
-                            <button class="btn btn-primary" onclick="adminViewUser(${user.id})">View</button>
-                            <button class="btn btn-danger" onclick="adminSuspendUser(${user.id})">Suspend</button>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
-            document.getElementById('adminUsersTable').innerHTML = usersHtml;
-        }
-
-        function loadAdminPremium() {
-            document.getElementById('totalRevenue').textContent = 'KSh ' + (adminData.premiumSubscribers.length * 999 * 12).toLocaleString();
-            document.getElementById('premiumSubscribers').textContent = adminData.premiumSubscribers.length;
-            document.getElementById('conversionRate').textContent = Math.round((adminData.premiumSubscribers.length / adminData.users.length) * 100) + '%';
-            document.getElementById('renewalRate').textContent = '92%';
-
-            const subscribersHtml = adminData.premiumSubscribers.map(user => `
-                <tr>
-                    <td>${user.name}</td>
-                    <td>Monthly Premium</td>
-                    <td>${user.joined}</td>
-                    <td>${new Date(new Date(user.joined).setMonth(new Date(user.joined).getMonth() + 1)).toISOString().split('T')[0]}</td>
-                    <td>KSh 999</td>
-                    <td><span class="user-status status-active">Active</span></td>
-                </tr>
-            `).join('');
-            document.getElementById('premiumSubscribersTable').innerHTML = subscribersHtml;
-        }
-
-        function adminViewUser(userId) {
-            const user = adminData.users.find(u => u.id === userId);
-            alert(`User Details:\nName: ${user.name}\nEmail: ${user.email}\nPhone: ${user.phone || 'N/A'}\nLocation: ${user.location}\nStatus: ${user.status}\nPremium: ${user.isPremium ? 'Yes' : 'No'}\nMatches: ${user.matches || 0}`);
-        }
-
-        function adminSuspendUser(userId) {
-            const user = adminData.users.find(u => u.id === userId);
-            user.status = user.status === 'suspended' ? 'active' : 'suspended';
-            loadAdminUsers();
-            showNotification(`User ${user.name} ${user.status === 'suspended' ? 'suspended' : 'activated'}`, 'warning');
-        }
-
-        // Notification System
-        function showNotification(message, type = 'success') {
-            const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
-            notification.textContent = message;
-            document.getElementById('notificationContainer').appendChild(notification);
-
-            setTimeout(() => {
-                notification.classList.add('show');
-            }, 100);
-
-            setTimeout(() => {
-                notification.classList.remove('show');
-                setTimeout(() => {
-                    notification.remove();
-                }, 300);
-            }, 3000);
-        }
-
-        function checkAuthStatus() {
-            // Check if user was previously logged in
-            const savedUser = localStorage.getItem('wetlands_user');
-            if (savedUser) {
-                currentUser = JSON.parse(savedUser);
-                if (currentUser.role === 'admin') {
-                    activateAdminMode();
-                } else {
-                    activateUserMode();
-                }
-            }
-        }
-
-        // Initialize the platform when page loads
-        window.onload = initPlatform;
-    </script>
-</body>
-</html>
+            if (isPremium) {
+                document.getElementById('premiumStatus').style.display = 'inline-block';
+                document.getElementById('currentPlan').
