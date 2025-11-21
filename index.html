@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wetlands Premium - Kenyan Dating & Partner Finder</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -27,12 +28,15 @@
             --premium: #ffd700;
             --chat: #3498db;
             --mpesa: #00A650;
+            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+            --radius: 12px;
         }
 
         body {
             background: linear-gradient(135deg, var(--water) 0%, var(--primary) 100%);
             color: #333;
             min-height: 100vh;
+            line-height: 1.6;
         }
 
         body.admin-mode {
@@ -48,7 +52,8 @@
             width: 100%;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
         }
 
         .header.admin-header {
@@ -89,6 +94,23 @@
             color: var(--dark);
             font-weight: 500;
             transition: color 0.3s;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover:after {
+            width: 100%;
         }
 
         .admin-mode .nav-links a {
@@ -118,7 +140,10 @@
             cursor: pointer;
             transition: all 0.3s;
             text-decoration: none;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
             text-align: center;
         }
 
@@ -130,6 +155,7 @@
         .btn-primary:hover {
             background: var(--secondary);
             transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(46, 139, 87, 0.3);
         }
 
         .btn-outline {
@@ -205,10 +231,22 @@
         .auth-container {
             background: var(--white);
             padding: 3rem;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
             width: 100%;
             max-width: 500px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-container:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
         }
 
         .auth-tabs {
@@ -241,11 +279,18 @@
 
         .auth-content.active {
             display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* Forms */
         .form-group {
             margin-bottom: 1.5rem;
+            position: relative;
         }
 
         .form-label {
@@ -261,12 +306,24 @@
             border: 2px solid #e9ecef;
             border-radius: 10px;
             font-size: 1rem;
-            transition: border-color 0.3s;
+            transition: all 0.3s;
         }
 
         .form-control:focus {
             outline: none;
             border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(46, 139, 87, 0.1);
+        }
+
+        .form-control.error {
+            border-color: var(--danger);
+        }
+
+        .error-message {
+            color: var(--danger);
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+            display: none;
         }
 
         /* User Dashboard */
@@ -285,14 +342,19 @@
         /* User Sidebar */
         .user-sidebar {
             background: var(--white);
-            border-radius: 20px;
+            border-radius: var(--radius);
             padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 100px;
+            height: fit-content;
         }
 
         .user-profile-card {
             text-align: center;
             margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #e9ecef;
         }
 
         .user-avatar {
@@ -307,7 +369,7 @@
             font-size: 2.5rem;
             color: var(--white);
             border: 4px solid var(--white);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: var(--shadow);
         }
 
         .user-name {
@@ -319,6 +381,10 @@
         .user-location {
             color: #666;
             margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
         }
 
         .premium-badge {
@@ -329,6 +395,7 @@
             font-weight: 600;
             margin-bottom: 1rem;
             display: inline-block;
+            box-shadow: 0 4px 10px rgba(255, 215, 0, 0.3);
         }
 
         .sidebar-nav {
@@ -340,7 +407,9 @@
         }
 
         .sidebar-nav a {
-            display: block;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
             padding: 1rem;
             text-decoration: none;
             color: var(--dark);
@@ -351,14 +420,15 @@
         .sidebar-nav a:hover, .sidebar-nav a.active {
             background: var(--light);
             color: var(--primary);
+            transform: translateX(5px);
         }
 
         /* Main Content Area */
         .main-content-area {
             background: var(--white);
-            border-radius: 20px;
+            border-radius: var(--radius);
             padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow);
             overflow-y: auto;
         }
 
@@ -383,6 +453,7 @@
 
         .content-section.active {
             display: block;
+            animation: fadeIn 0.5s ease;
         }
 
         /* Payment Modal */
@@ -405,11 +476,12 @@
             transform: translate(-50%, -50%);
             background: var(--white);
             padding: 2rem;
-            border-radius: 20px;
+            border-radius: var(--radius);
             width: 90%;
             max-width: 500px;
             max-height: 90vh;
             overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
         }
 
         .payment-header {
@@ -455,9 +527,10 @@
         .admin-upgrade-section {
             background: var(--white);
             padding: 2rem;
-            border-radius: 15px;
+            border-radius: var(--radius);
             margin: 2rem 0;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--admin);
         }
 
         .upgrade-form {
@@ -471,9 +544,9 @@
         .subscription-card {
             background: var(--white);
             padding: 2rem;
-            border-radius: 15px;
+            border-radius: var(--radius);
             margin: 1rem 0;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow);
             border-left: 5px solid var(--premium);
         }
 
@@ -521,6 +594,11 @@
             align-items: center;
             padding: 1rem;
             border-bottom: 1px solid #e9ecef;
+            transition: background 0.3s;
+        }
+
+        .payment-item:hover {
+            background: var(--light);
         }
 
         .payment-success {
@@ -548,10 +626,15 @@
         .stat-card {
             background: var(--white);
             padding: 2rem;
-            border-radius: 15px;
+            border-radius: var(--radius);
             text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow);
             border-left: 5px solid var(--admin);
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
         }
 
         .stat-icon {
@@ -574,9 +657,9 @@
         /* Data Tables */
         .data-table-container {
             background: var(--white);
-            border-radius: 15px;
+            border-radius: var(--radius);
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow);
         }
 
         .data-table {
@@ -597,6 +680,10 @@
             color: var(--dark);
         }
 
+        .data-table tr:hover {
+            background: #f9f9f9;
+        }
+
         /* Notifications */
         .notification {
             position: fixed;
@@ -606,10 +693,13 @@
             color: var(--white);
             padding: 1rem 2rem;
             border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: var(--shadow);
             z-index: 3000;
             transform: translateX(400px);
             transition: transform 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
         }
 
         .notification.show {
@@ -648,6 +738,10 @@
             .upgrade-form {
                 grid-template-columns: 1fr;
             }
+            
+            .auth-container {
+                padding: 2rem;
+            }
         }
 
         .kenya-flag {
@@ -666,6 +760,73 @@
             font-size: 0.8rem;
             font-weight: 600;
         }
+        
+        .demo-accounts {
+            text-align: center;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-top: 1rem;
+        }
+        
+        .demo-accounts p {
+            margin-bottom: 0.5rem;
+        }
+        
+        .demo-accounts strong {
+            color: var(--primary);
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .feature-card {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .feature-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        
+        .feature-description {
+            color: #666;
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 <body>
@@ -673,27 +834,27 @@
     <header class="header" id="mainHeader">
         <nav class="nav">
             <div class="logo">
-                🌊 Wetlands Premium
+                <i class="fas fa-water"></i> Wetlands Premium
                 <span id="adminBadge" class="admin-badge" style="display: none;">Admin</span>
             </div>
             <ul class="nav-links" id="userNav" style="display: none;">
-                <li><a href="#" onclick="showUserSection('discover')">Discover</a></li>
-                <li><a href="#" onclick="showUserSection('matches')">Matches</a></li>
-                <li><a href="#" onclick="showUserSection('messages')">Messages</a></li>
-                <li><a href="#" onclick="showUserSection('premium')">Go Premium</a></li>
+                <li><a href="#" onclick="showUserSection('discover')"><i class="fas fa-search"></i> Discover</a></li>
+                <li><a href="#" onclick="showUserSection('matches')"><i class="fas fa-heart"></i> Matches</a></li>
+                <li><a href="#" onclick="showUserSection('messages')"><i class="fas fa-comments"></i> Messages</a></li>
+                <li><a href="#" onclick="showUserSection('premium')"><i class="fas fa-crown"></i> Go Premium</a></li>
             </ul>
             <ul class="nav-links" id="adminNav" style="display: none;">
-                <li><a href="#" onclick="showAdminTab('dashboard')">Dashboard</a></li>
-                <li><a href="#" onclick="showAdminTab('users')">Users</a></li>
-                <li><a href="#" onclick="showAdminTab('premium')">Premium</a></li>
-                <li><a href="#" onclick="showAdminTab('payments')">Payments</a></li>
+                <li><a href="#" onclick="showAdminTab('dashboard')"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="#" onclick="showAdminTab('users')"><i class="fas fa-users"></i> Users</a></li>
+                <li><a href="#" onclick="showAdminTab('premium')"><i class="fas fa-crown"></i> Premium</a></li>
+                <li><a href="#" onclick="showAdminTab('payments')"><i class="fas fa-credit-card"></i> Payments</a></li>
             </ul>
             <div class="nav-actions">
                 <span id="userWelcome" style="display: none;"></span>
-                <button class="btn btn-outline" onclick="showAuthPage()" id="authBtn">Login</button>
-                <button class="btn btn-premium" onclick="showUserSection('premium')" id="premiumBtn" style="display: none;">🌟 Premium</button>
-                <button class="btn btn-admin" onclick="showAdminPanel()" id="adminBtn" style="display: none;">Admin Panel</button>
-                <button class="btn btn-danger" onclick="logout()" id="logoutBtn" style="display: none;">Logout</button>
+                <button class="btn btn-outline" onclick="showAuthPage()" id="authBtn"><i class="fas fa-sign-in-alt"></i> Login</button>
+                <button class="btn btn-premium" onclick="showUserSection('premium')" id="premiumBtn" style="display: none;"><i class="fas fa-crown"></i> Premium</button>
+                <button class="btn btn-admin" onclick="showAdminPanel()" id="adminBtn" style="display: none;"><i class="fas fa-cog"></i> Admin Panel</button>
+                <button class="btn btn-danger" onclick="logout()" id="logoutBtn" style="display: none;"><i class="fas fa-sign-out-alt"></i> Logout</button>
             </div>
         </nav>
     </header>
@@ -702,7 +863,7 @@
     <section class="auth-page" id="authPage">
         <div class="auth-container">
             <div style="text-align: center; margin-bottom: 2rem;">
-                <h1 style="font-size: 2.5rem; color: var(--primary); margin-bottom: 0.5rem;">🌊</h1>
+                <h1 style="font-size: 2.5rem; color: var(--primary); margin-bottom: 0.5rem;"><i class="fas fa-water"></i></h1>
                 <h2 style="color: var(--dark); margin-bottom: 0.5rem;">Wetlands Premium</h2>
                 <p style="color: #666;">Find your perfect match in Kenya</p>
             </div>
@@ -717,14 +878,19 @@
                     <div class="form-group">
                         <label class="form-label">Email or Phone</label>
                         <input type="text" class="form-control" id="loginIdentifier" placeholder="Email or +254..." required>
+                        <div class="error-message" id="loginIdentifierError"></div>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Password</label>
                         <input type="password" class="form-control" id="loginPassword" required>
+                        <div class="error-message" id="loginPasswordError"></div>
                     </div>
-                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 1rem;">Login</button>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 1rem;" id="loginBtn">
+                        <span id="loginBtnText">Login</span>
+                        <div class="loading" id="loginLoading" style="display: none;"></div>
+                    </button>
                 </form>
-                <div style="text-align: center; padding: 1rem; background: #f8f9fa; border-radius: 10px;">
+                <div class="demo-accounts">
                     <p><strong>Demo Accounts:</strong></p>
                     <p><strong>Admin:</strong> admin@wetlands.com / admin123</p>
                     <p><strong>User:</strong> user@wetlands.com / user123</p>
@@ -737,10 +903,12 @@
                     <div class="form-group">
                         <label class="form-label">Full Name</label>
                         <input type="text" class="form-control" id="registerName" required>
+                        <div class="error-message" id="registerNameError"></div>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Email</label>
                         <input type="email" class="form-control" id="registerEmail" required>
+                        <div class="error-message" id="registerEmailError"></div>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Phone Number</label>
@@ -752,10 +920,12 @@
                             </select>
                             <input type="tel" class="form-control" id="registerPhone" placeholder="700000000" required style="flex: 1;">
                         </div>
+                        <div class="error-message" id="registerPhoneError"></div>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Password</label>
                         <input type="password" class="form-control" id="registerPassword" required>
+                        <div class="error-message" id="registerPasswordError"></div>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Gender</label>
@@ -778,6 +948,7 @@
                     <div class="form-group">
                         <label class="form-label">Age</label>
                         <input type="number" class="form-control" id="registerAge" min="18" max="100" required>
+                        <div class="error-message" id="registerAgeError"></div>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Location</label>
@@ -790,7 +961,10 @@
                             <option value="foreigner">Foreigner</option>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-success" style="width: 100%;">Create Account</button>
+                    <button type="submit" class="btn btn-success" style="width: 100%;" id="registerBtn">
+                        <span id="registerBtnText">Create Account</span>
+                        <div class="loading" id="registerLoading" style="display: none;"></div>
+                    </button>
                 </form>
             </div>
         </div>
@@ -805,34 +979,84 @@
                     <div class="user-profile-card">
                         <div class="user-avatar" id="userAvatar">👤</div>
                         <div class="user-name" id="sidebarUserName">User Name</div>
-                        <div class="user-location" id="sidebarUserLocation">Location</div>
-                        <div class="premium-badge" id="premiumStatus" style="display: none;">🌟 PREMIUM MEMBER</div>
-                        <button class="btn btn-premium" onclick="showPaymentModal()" style="width: 100%;" id="upgradeBtn">Upgrade to Premium</button>
+                        <div class="user-location" id="sidebarUserLocation">
+                            <i class="fas fa-map-marker-alt"></i> Location
+                        </div>
+                        <div class="premium-badge" id="premiumStatus" style="display: none;">
+                            <i class="fas fa-crown"></i> PREMIUM MEMBER
+                        </div>
+                        <button class="btn btn-premium" onclick="showPaymentModal()" style="width: 100%;" id="upgradeBtn">
+                            <i class="fas fa-crown"></i> Upgrade to Premium
+                        </button>
                     </div>
                     
                     <ul class="sidebar-nav">
-                        <li><a href="#" class="active" onclick="showUserSection('discover')">🔍 Discover</a></li>
-                        <li><a href="#" onclick="showUserSection('matches')">💕 My Matches</a></li>
-                        <li><a href="#" onclick="showUserSection('messages')">💬 Messages</a></li>
-                        <li><a href="#" onclick="showUserSection('premium')">🌟 Subscription</a></li>
-                        <li><a href="#" onclick="showUserSection('settings')">⚙️ Settings</a></li>
+                        <li><a href="#" class="active" onclick="showUserSection('discover')"><i class="fas fa-search"></i> Discover</a></li>
+                        <li><a href="#" onclick="showUserSection('matches')"><i class="fas fa-heart"></i> My Matches</a></li>
+                        <li><a href="#" onclick="showUserSection('messages')"><i class="fas fa-comments"></i> Messages</a></li>
+                        <li><a href="#" onclick="showUserSection('premium')"><i class="fas fa-crown"></i> Subscription</a></li>
+                        <li><a href="#" onclick="showUserSection('settings')"><i class="fas fa-cog"></i> Settings</a></li>
                     </ul>
                 </div>
 
                 <!-- Main Content Area -->
                 <div class="main-content-area">
+                    <!-- Discover Section -->
+                    <div class="content-section" id="discoverSection">
+                        <div class="content-header">
+                            <h2 class="content-title">Discover Matches</h2>
+                            <div>
+                                <button class="btn btn-outline"><i class="fas fa-filter"></i> Filter</button>
+                                <button class="btn btn-primary" style="margin-left: 1rem;"><i class="fas fa-sync-alt"></i> Refresh</button>
+                            </div>
+                        </div>
+                        
+                        <div class="feature-grid">
+                            <div class="feature-card">
+                                <div class="feature-icon"><i class="fas fa-user-plus"></i></div>
+                                <div class="feature-title">Smart Matching</div>
+                                <div class="feature-description">Find compatible partners based on your preferences and interests</div>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon"><i class="fas fa-lock"></i></div>
+                                <div class="feature-title">Secure & Private</div>
+                                <div class="feature-description">Your data and conversations are protected with end-to-end encryption</div>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
+                                <div class="feature-title">Mobile Friendly</div>
+                                <div class="feature-description">Access Wetlands Premium from any device, anywhere in Kenya</div>
+                            </div>
+                        </div>
+                        
+                        <div style="text-align: center; margin-top: 2rem; padding: 2rem; background: #f8f9fa; border-radius: var(--radius);">
+                            <h3 style="margin-bottom: 1rem;">Unlock More Features with Premium</h3>
+                            <p style="margin-bottom: 1.5rem; color: #666;">See who likes you, send unlimited messages, and get priority in search results</p>
+                            <button class="btn btn-premium" onclick="showUserSection('premium')">
+                                <i class="fas fa-crown"></i> Upgrade to Premium
+                            </button>
+                        </div>
+                    </div>
+
                     <!-- Premium/Subscription Section -->
                     <div class="content-section active" id="premiumSection">
                         <div class="content-header">
                             <h2 class="content-title">Your Subscription</h2>
+                            <div id="premiumActions">
+                                <!-- Premium actions will be shown here -->
+                            </div>
                         </div>
 
                         <!-- Current Subscription Status -->
                         <div class="subscription-card">
                             <div class="subscription-status">
                                 <h3>Current Plan</h3>
-                                <span id="currentPlan" class="premium-badge" style="display: none;">Premium</span>
-                                <span id="basicPlan" style="background: #666; color: white; padding: 0.5rem 1rem; border-radius: 20px; font-weight: 600;">Basic</span>
+                                <span id="currentPlan" class="premium-badge" style="display: none;">
+                                    <i class="fas fa-crown"></i> Premium
+                                </span>
+                                <span id="basicPlan" style="background: #666; color: white; padding: 0.5rem 1rem; border-radius: 20px; font-weight: 600;">
+                                    Basic
+                                </span>
                             </div>
                             
                             <div class="subscription-details">
@@ -856,10 +1080,10 @@
 
                             <div style="margin-top: 2rem; text-align: center;">
                                 <button class="btn btn-premium" onclick="showPaymentModal()" id="upgradeActionBtn">
-                                    Upgrade to Premium
+                                    <i class="fas fa-crown"></i> Upgrade to Premium
                                 </button>
                                 <button class="btn btn-danger" onclick="cancelSubscription()" id="cancelBtn" style="display: none; margin-left: 1rem;">
-                                    Cancel Subscription
+                                    <i class="fas fa-times"></i> Cancel Subscription
                                 </button>
                             </div>
                         </div>
@@ -886,22 +1110,22 @@
                 
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <div class="stat-icon">💰</div>
+                        <div class="stat-icon"><i class="fas fa-money-bill-wave"></i></div>
                         <div class="stat-number" id="totalRevenue">KSh 0</div>
                         <div class="stat-label">Total Revenue</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon">👑</div>
+                        <div class="stat-icon"><i class="fas fa-crown"></i></div>
                         <div class="stat-number" id="premiumSubscribers">0</div>
                         <div class="stat-label">Premium Subscribers</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon">📊</div>
+                        <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
                         <div class="stat-number" id="conversionRate">0%</div>
                         <div class="stat-label">Conversion Rate</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon">🔄</div>
+                        <div class="stat-icon"><i class="fas fa-sync-alt"></i></div>
                         <div class="stat-number" id="renewalRate">0%</div>
                         <div class="stat-label">Renewal Rate</div>
                     </div>
@@ -941,7 +1165,7 @@
                         <input type="text" class="form-control" id="adminTransactionId" placeholder="e.g., MPS123456789">
                     </div>
                     <button class="btn btn-success" onclick="adminManualUpgrade()" style="width: 100%;">
-                        Upgrade User Manually
+                        <i class="fas fa-user-plus"></i> Upgrade User Manually
                     </button>
                 </div>
 
@@ -972,22 +1196,22 @@
                 
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <div class="stat-icon">💳</div>
+                        <div class="stat-icon"><i class="fas fa-credit-card"></i></div>
                         <div class="stat-number" id="totalPayments">0</div>
                         <div class="stat-label">Total Payments</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon">✅</div>
+                        <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
                         <div class="stat-number" id="successfulPayments">0</div>
                         <div class="stat-label">Successful</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon">⏳</div>
+                        <div class="stat-icon"><i class="fas fa-clock"></i></div>
                         <div class="stat-number" id="pendingPayments">0</div>
                         <div class="stat-label">Pending</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon">❌</div>
+                        <div class="stat-icon"><i class="fas fa-times-circle"></i></div>
                         <div class="stat-number" id="failedPayments">0</div>
                         <div class="stat-label">Failed</div>
                     </div>
@@ -1025,7 +1249,7 @@
             </div>
 
             <div class="payment-option" onclick="selectPaymentOption('mpesa')">
-                <div class="payment-icon">📱</div>
+                <div class="payment-icon"><i class="fas fa-mobile-alt"></i></div>
                 <h3 style="margin-bottom: 0.5rem;">M-Pesa</h3>
                 <p style="color: #666; margin-bottom: 1rem;">Pay via M-Pesa mobile money</p>
                 <div class="payment-details" id="mpesaDetails">
@@ -1034,13 +1258,13 @@
                         <input type="tel" class="form-control" id="mpesaPhone" placeholder="+2547XXXXXXXX" value="+254700000000">
                     </div>
                     <button class="btn btn-mpesa" onclick="processMpesaPayment()" style="width: 100%;">
-                        Pay KSh 999 via M-Pesa
+                        <i class="fas fa-mobile-alt"></i> Pay KSh 999 via M-Pesa
                     </button>
                 </div>
             </div>
 
             <div class="payment-option" onclick="selectPaymentOption('card')">
-                <div class="payment-icon">💳</div>
+                <div class="payment-icon"><i class="fas fa-credit-card"></i></div>
                 <h3 style="margin-bottom: 0.5rem;">Credit/Debit Card</h3>
                 <p style="color: #666; margin-bottom: 1rem;">Pay with your card securely</p>
                 <div class="payment-details" id="cardDetails">
@@ -1059,13 +1283,13 @@
                         </div>
                     </div>
                     <button class="btn btn-primary" onclick="processCardPayment()" style="width: 100%;">
-                        Pay KSh 999
+                        <i class="fas fa-credit-card"></i> Pay KSh 999
                     </button>
                 </div>
             </div>
 
             <div class="payment-option" onclick="selectPaymentOption('manual')">
-                <div class="payment-icon">🏦</div>
+                <div class="payment-icon"><i class="fas fa-university"></i></div>
                 <h3 style="margin-bottom: 0.5rem;">Manual Payment</h3>
                 <p style="color: #666; margin-bottom: 1rem;">Bank transfer or other methods</p>
                 <div class="payment-details" id="manualDetails">
@@ -1077,13 +1301,13 @@
                         <p>Amount: KSh 999</p>
                     </div>
                     <button class="btn btn-outline" onclick="processManualPayment()" style="width: 100%;">
-                        I have made the payment
+                        <i class="fas fa-check"></i> I have made the payment
                     </button>
                 </div>
             </div>
 
             <button class="btn btn-danger" onclick="closePaymentModal()" style="width: 100%; margin-top: 1rem;">
-                Cancel
+                <i class="fas fa-times"></i> Cancel
             </button>
         </div>
     </div>
@@ -1116,7 +1340,8 @@
                     premiumSince: "2024-01-15",
                     premiumExpires: "2024-02-15",
                     location: "nairobi",
-                    gender: "female"
+                    gender: "female",
+                    avatar: "👩"
                 },
                 {
                     id: 2,
@@ -1125,7 +1350,8 @@
                     phone: "+254711000002",
                     isPremium: false,
                     location: "mombasa",
-                    gender: "male"
+                    gender: "male",
+                    avatar: "👨"
                 },
                 {
                     id: 3,
@@ -1136,7 +1362,8 @@
                     premiumSince: "2024-01-20",
                     premiumExpires: "2024-02-20",
                     location: "kisumu",
-                    gender: "female"
+                    gender: "female",
+                    avatar: "👩"
                 }
             ];
 
@@ -1168,7 +1395,8 @@
                 name: "System Admin",
                 email: "admin@wetlands.com",
                 role: "admin",
-                isPremium: true
+                isPremium: true,
+                avatar: "👨‍💼"
             });
         }
 
@@ -1192,57 +1420,106 @@
             const identifier = document.getElementById('loginIdentifier').value;
             const password = document.getElementById('loginPassword').value;
 
-            // Check for admin
-            if (identifier === 'admin@wetlands.com' && password === 'admin123') {
-                currentUser = {
-                    id: 999,
-                    name: "System Admin",
-                    email: "admin@wetlands.com",
-                    role: "admin",
-                    isPremium: true
-                };
-                activateAdminMode();
-                showNotification('Welcome Admin! 🛡️', 'success');
+            // Show loading state
+            const loginBtn = document.getElementById('loginBtn');
+            const loginBtnText = document.getElementById('loginBtnText');
+            const loginLoading = document.getElementById('loginLoading');
+            
+            loginBtnText.textContent = 'Logging in...';
+            loginLoading.style.display = 'inline-block';
+            loginBtn.disabled = true;
+
+            // Clear previous errors
+            clearFormErrors('login');
+
+            // Validate form
+            const errors = validateLoginForm(identifier, password);
+            if (errors.length > 0) {
+                errors.forEach(error => {
+                    showFormError('login', error.field, error.message);
+                });
+                
+                loginBtnText.textContent = 'Login';
+                loginLoading.style.display = 'none';
+                loginBtn.disabled = false;
                 return;
             }
 
-            // Check for demo user
-            if ((identifier === 'user@wetlands.com' || identifier === '+254700000000') && password === 'user123') {
-                currentUser = {
-                    id: 100,
-                    name: "Demo User",
-                    email: 'user@wetlands.com',
-                    phone: '+254700000000',
-                    age: 28,
-                    gender: 'undisclosed',
-                    sexuality: 'straight',
-                    location: 'nairobi',
-                    bio: 'Exploring meaningful connections in Kenya.',
-                    interests: ['travel', 'music', 'technology'],
-                    goal: 'relationship',
-                    education: 'university',
-                    role: 'user',
-                    status: 'active',
-                    isPremium: false,
-                    joined: '2024-01-25',
-                    matches: 3
-                };
-                activateUserMode();
-                showNotification('Karibu back to Wetlands! 🎉', 'success');
-                return;
-            }
+            // Simulate API call
+            setTimeout(() => {
+                // Check for admin
+                if (identifier === 'admin@wetlands.com' && password === 'admin123') {
+                    currentUser = {
+                        id: 999,
+                        name: "System Admin",
+                        email: "admin@wetlands.com",
+                        role: "admin",
+                        isPremium: true,
+                        avatar: "👨‍💼"
+                    };
+                    activateAdminMode();
+                    showNotification('Welcome Admin! 🛡️', 'success');
+                }
+                // Check for demo user
+                else if ((identifier === 'user@wetlands.com' || identifier === '+254700000000') && password === 'user123') {
+                    currentUser = {
+                        id: 100,
+                        name: "Demo User",
+                        email: 'user@wetlands.com',
+                        phone: '+254700000000',
+                        age: 28,
+                        gender: 'undisclosed',
+                        sexuality: 'straight',
+                        location: 'nairobi',
+                        bio: 'Exploring meaningful connections in Kenya.',
+                        interests: ['travel', 'music', 'technology'],
+                        goal: 'relationship',
+                        education: 'university',
+                        role: 'user',
+                        status: 'active',
+                        isPremium: false,
+                        joined: '2024-01-25',
+                        matches: 3,
+                        avatar: '👤'
+                    };
+                    activateUserMode();
+                    showNotification('Karibu back to Wetlands! 🎉', 'success');
+                }
+                // Check phone login
+                else {
+                    const phoneUser = allProfiles.find(u => u.phone === identifier);
+                    if (phoneUser && password === 'user123') {
+                        currentUser = phoneUser;
+                        currentUser.role = 'user'; // Ensure role is set
+                        activateUserMode();
+                        showNotification('Karibu back! 📱', 'success');
+                    } else {
+                        showNotification('Invalid login credentials', 'error');
+                        showFormError('login', 'identifier', 'Invalid email, phone or password');
+                        showFormError('login', 'password', 'Invalid email, phone or password');
+                    }
+                }
+                
+                loginBtnText.textContent = 'Login';
+                loginLoading.style.display = 'none';
+                loginBtn.disabled = false;
+            }, 1500);
+        }
 
-            // Check phone login
-            const phoneUser = allProfiles.find(u => u.phone === identifier);
-            if (phoneUser && password === 'user123') {
-                currentUser = phoneUser;
-                currentUser.role = 'user'; // Ensure role is set
-                activateUserMode();
-                showNotification('Karibu back! 📱', 'success');
-                return;
+        function validateLoginForm(identifier, password) {
+            const errors = [];
+            
+            if (!identifier.trim()) {
+                errors.push({ field: 'identifier', message: 'Email or phone number is required' });
             }
-
-            showNotification('Invalid login credentials', 'error');
+            
+            if (!password) {
+                errors.push({ field: 'password', message: 'Password is required' });
+            } else if (password.length < 6) {
+                errors.push({ field: 'password', message: 'Password must be at least 6 characters' });
+            }
+            
+            return errors;
         }
 
         function handleRegister(event) {
@@ -1254,38 +1531,111 @@
             const password = document.getElementById('registerPassword').value;
             const gender = document.getElementById('registerGender').value;
             const sexuality = document.getElementById('registerSexuality').value;
-            const age = document.getElementById('registerAge').value;
+            const age = parseInt(document.getElementById('registerAge').value);
             const location = document.getElementById('registerLocation').value;
 
-            currentUser = {
-                id: Date.now(),
-                name: name,
-                email: email,
-                phone: phone,
-                age: parseInt(age),
-                gender: gender,
-                sexuality: sexuality,
-                location: location,
-                bio: '',
-                interests: [],
-                goal: 'dating',
-                education: 'college',
-                role: 'user',
-                status: 'active',
-                isPremium: false,
-                joined: new Date().toISOString().split('T')[0],
-                matches: 0,
-                avatar: gender === 'male' ? '👨' : gender === 'female' ? '👩' : '👤'
-            };
-
-            // Add to system
-            allProfiles.push(currentUser);
-            showNotification('Account created successfully! Karibu to Wetlands! 🎉', 'success');
+            // Show loading state
+            const registerBtn = document.getElementById('registerBtn');
+            const registerBtnText = document.getElementById('registerBtnText');
+            const registerLoading = document.getElementById('registerLoading');
             
-            // Auto login after registration
+            registerBtnText.textContent = 'Creating Account...';
+            registerLoading.style.display = 'inline-block';
+            registerBtn.disabled = true;
+
+            // Clear previous errors
+            clearFormErrors('register');
+
+            // Validate form
+            const formData = { name, email, phone, password, age };
+            const errors = validateRegistrationForm(formData);
+            if (errors.length > 0) {
+                errors.forEach(error => {
+                    showFormError('register', error.field, error.message);
+                });
+                
+                registerBtnText.textContent = 'Create Account';
+                registerLoading.style.display = 'none';
+                registerBtn.disabled = false;
+                return;
+            }
+
+            // Simulate API call
             setTimeout(() => {
-                activateUserMode();
-            }, 1000);
+                currentUser = {
+                    id: Date.now(),
+                    name: name,
+                    email: email,
+                    phone: phone,
+                    age: age,
+                    gender: gender,
+                    sexuality: sexuality,
+                    location: location,
+                    bio: '',
+                    interests: [],
+                    goal: 'dating',
+                    education: 'college',
+                    role: 'user',
+                    status: 'active',
+                    isPremium: false,
+                    joined: new Date().toISOString().split('T')[0],
+                    matches: 0,
+                    avatar: gender === 'male' ? '👨' : gender === 'female' ? '👩' : '👤'
+                };
+
+                // Add to system
+                allProfiles.push(currentUser);
+                showNotification('Account created successfully! Karibu to Wetlands! 🎉', 'success');
+                
+                // Auto login after registration
+                setTimeout(() => {
+                    activateUserMode();
+                }, 1000);
+                
+                registerBtnText.textContent = 'Create Account';
+                registerLoading.style.display = 'none';
+                registerBtn.disabled = false;
+            }, 1500);
+        }
+
+        function validateRegistrationForm(formData) {
+            const { name, email, phone, password, age } = formData;
+            const errors = [];
+            
+            if (!name.trim()) errors.push({ field: 'name', message: 'Full name is required' });
+            if (!email.trim()) errors.push({ field: 'email', message: 'Email is required' });
+            if (!/^\S+@\S+\.\S+$/.test(email)) errors.push({ field: 'email', message: 'Valid email is required' });
+            if (!phone.trim()) errors.push({ field: 'phone', message: 'Phone number is required' });
+            if (password.length < 6) errors.push({ field: 'password', message: 'Password must be at least 6 characters' });
+            if (age < 18) errors.push({ field: 'age', message: 'You must be 18 or older to register' });
+            if (age > 100) errors.push({ field: 'age', message: 'Please enter a valid age' });
+            
+            return errors;
+        }
+
+        function showFormError(formType, field, message) {
+            const errorElement = document.getElementById(`${formType}${field.charAt(0).toUpperCase() + field.slice(1)}Error`);
+            if (errorElement) {
+                errorElement.textContent = message;
+                errorElement.style.display = 'block';
+                
+                const inputElement = document.getElementById(`${formType}${field.charAt(0).toUpperCase() + field.slice(1)}`);
+                if (inputElement) {
+                    inputElement.classList.add('error');
+                }
+            }
+        }
+
+        function clearFormErrors(formType) {
+            const errorElements = document.querySelectorAll(`#${formType}Tab .error-message`);
+            errorElements.forEach(element => {
+                element.style.display = 'none';
+            });
+            
+            const inputElements = document.querySelectorAll(`#${formType}Tab .form-control`);
+            inputElements.forEach(element => {
+                element.classList.remove('error');
+            });
         }
 
         function activateUserMode() {
@@ -1693,7 +2043,13 @@
         function showNotification(message, type = 'success') {
             const notification = document.createElement('div');
             notification.className = `notification ${type}`;
-            notification.textContent = message;
+            
+            // Add icon based on type
+            let icon = 'fas fa-check-circle';
+            if (type === 'error') icon = 'fas fa-exclamation-circle';
+            if (type === 'warning') icon = 'fas fa-exclamation-triangle';
+            
+            notification.innerHTML = `<i class="${icon}"></i> ${message}`;
             document.getElementById('notificationContainer').appendChild(notification);
 
             setTimeout(() => {
