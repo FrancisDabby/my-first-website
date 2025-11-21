@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wetlands - Kenyan Dating & Partner Finder</title>
+    <title>Wetlands Premium - Kenyan Dating & Partner Finder</title>
     <style>
         * {
             margin: 0;
@@ -24,6 +24,8 @@
             --danger: #e74c3c;
             --water: #87ceeb;
             --admin: #8e44ad;
+            --premium: #ffd700;
+            --chat: #3498db;
         }
 
         body {
@@ -54,7 +56,7 @@
         }
 
         .nav {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
@@ -160,6 +162,17 @@
             transform: translateY(-2px);
         }
 
+        .btn-premium {
+            background: linear-gradient(135deg, var(--premium), #ffed4e);
+            color: #000;
+            font-weight: 700;
+        }
+
+        .btn-chat {
+            background: var(--chat);
+            color: var(--white);
+        }
+
         /* Main Content */
         .main-content {
             margin-top: 80px;
@@ -167,102 +180,129 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 0 2rem;
         }
 
-        /* Hero Section */
-        .hero {
-            text-align: center;
-            padding: 4rem 0;
-            color: var(--white);
+        /* User Dashboard */
+        .user-dashboard {
+            display: none;
+            padding: 2rem 0;
         }
 
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            font-weight: 700;
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+            height: calc(100vh - 140px);
         }
 
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-
-        /* Sections */
-        .section {
+        /* User Sidebar */
+        .user-sidebar {
             background: var(--white);
-            margin: 2rem auto;
-            padding: 3rem;
             border-radius: 20px;
+            padding: 2rem;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
-        .admin-section {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-        }
-
-        .section-title {
+        .user-profile-card {
             text-align: center;
             margin-bottom: 2rem;
-            color: var(--dark);
+        }
+
+        .user-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 2.5rem;
+            color: var(--white);
+            border: 4px solid var(--white);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
 
-        /* Forms */
-        .form-container {
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-label {
-            display: block;
+        .user-name {
+            font-size: 1.5rem;
+            font-weight: 600;
             margin-bottom: 0.5rem;
+        }
+
+        .user-location {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .premium-badge {
+            background: linear-gradient(135deg, var(--premium), #ffed4e);
+            color: #000;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-nav a {
+            display: block;
+            padding: 1rem;
+            text-decoration: none;
+            color: var(--dark);
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        .sidebar-nav a:hover, .sidebar-nav a.active {
+            background: var(--light);
+            color: var(--primary);
+        }
+
+        /* Main Content Area */
+        .main-content-area {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow-y: auto;
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--light);
+        }
+
+        .content-title {
+            font-size: 2rem;
             font-weight: 600;
             color: var(--dark);
         }
 
-        .form-control {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid #e9ecef;
-            border-radius: 10px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        .form-select {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid #e9ecef;
-            border-radius: 10px;
-            font-size: 1rem;
-            background: var(--white);
-        }
-
-        /* Profile Cards */
+        /* Profiles Grid */
         .profiles-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 2rem;
-            margin: 2rem 0;
         }
 
         .profile-card {
             background: var(--white);
-            border-radius: 15px;
+            border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             transition: all 0.3s;
@@ -275,6 +315,24 @@
             border-color: var(--primary);
         }
 
+        .profile-card.premium {
+            border-color: var(--premium);
+            position: relative;
+        }
+
+        .premium-corner {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--premium);
+            color: #000;
+            padding: 0.5rem 1rem;
+            border-radius: 15px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            z-index: 2;
+        }
+
         .profile-header {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: var(--white);
@@ -283,32 +341,28 @@
             position: relative;
         }
 
-        .admin-card .profile-header {
-            background: linear-gradient(135deg, var(--admin), #9b59b6);
-        }
-
         .profile-avatar {
-            width: 100px;
-            height: 100px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
             background: var(--white);
             margin: 0 auto 1rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.5rem;
+            font-size: 2rem;
             border: 4px solid var(--white);
         }
 
         .profile-name {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
         }
 
         .profile-age {
             opacity: 0.9;
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
 
         .profile-body {
@@ -341,10 +395,104 @@
             border-radius: 20px;
             font-weight: 600;
             text-align: center;
-            margin-top: 1rem;
+            margin: 1rem 0;
         }
 
-        /* Admin Dashboard */
+        .profile-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .profile-actions .btn {
+            flex: 1;
+            padding: 0.8rem;
+            font-size: 0.9rem;
+        }
+
+        /* Chat System */
+        .chat-container {
+            display: none;
+            height: 600px;
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .chat-messages {
+            height: 400px;
+            padding: 1rem;
+            overflow-y: auto;
+            background: #f8f9fa;
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-radius: 15px;
+            max-width: 70%;
+        }
+
+        .message.sent {
+            background: var(--primary);
+            color: var(--white);
+            margin-left: auto;
+        }
+
+        .message.received {
+            background: var(--light);
+            color: var(--dark);
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 1rem;
+            background: var(--white);
+            border-top: 1px solid #e9ecef;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid #e9ecef;
+            border-radius: 25px;
+            margin-right: 1rem;
+        }
+
+        /* Premium Features */
+        .premium-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 2px solid transparent;
+        }
+
+        .feature-card.premium {
+            border-color: var(--premium);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Admin Dashboard (Improved) */
         .admin-dashboard {
             display: none;
         }
@@ -382,126 +530,34 @@
             font-weight: 600;
         }
 
-        /* Admin Tables */
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1rem 0;
-            background: var(--white);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .data-table th,
-        .data-table td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-        }
-
-        .data-table th {
-            background: var(--light);
-            font-weight: 600;
-            color: var(--dark);
-        }
-
-        .data-table tr:hover {
-            background: var(--light);
-        }
-
-        .table-actions {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        /* Search Filters */
-        .filters {
-            background: var(--light);
-            padding: 2rem;
-            border-radius: 15px;
-            margin-bottom: 2rem;
-        }
-
-        .filter-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-        }
-
-        /* Matching System */
-        .match-indicator {
-            height: 10px;
-            background: #e9ecef;
-            border-radius: 5px;
-            margin: 1rem 0;
-            overflow: hidden;
-        }
-
-        .match-progress {
-            height: 100%;
-            background: linear-gradient(90deg, var(--success), var(--accent));
-            border-radius: 5px;
-            transition: width 0.3s;
-        }
-
-        /* Modals */
-        .modal {
+        /* Forms */
+        .auth-page {
             display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 2000;
-            backdrop-filter: blur(5px);
-        }
-
-        .modal-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: var(--white);
-            padding: 2rem;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 500px;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        .modal-header {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--water) 0%, var(--primary) 100%);
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
+            justify-content: center;
+            padding: 2rem;
         }
 
-        .modal-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--dark);
+        .auth-container {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 500px;
         }
 
-        .close-modal {
-            background: none;
-            border: none;
-            font-size: 2rem;
-            cursor: pointer;
-            color: #666;
-        }
-
-        /* Tabs */
-        .tabs {
+        .auth-tabs {
             display: flex;
             gap: 1rem;
             margin-bottom: 2rem;
             border-bottom: 2px solid #e9ecef;
         }
 
-        .tab {
+        .auth-tab {
             padding: 1rem 2rem;
             background: none;
             border: none;
@@ -513,22 +569,47 @@
             transition: all 0.3s;
         }
 
-        .tab.active {
+        .auth-tab.active {
             color: var(--primary);
             border-bottom-color: var(--primary);
         }
 
-        .admin-tabs .tab.active {
-            color: var(--admin);
-            border-bottom-color: var(--admin);
+        .form-group {
+            margin-bottom: 1.5rem;
         }
 
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
+        .form-label {
             display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .phone-input {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .phone-input select {
+            width: 100px;
+        }
+
+        .phone-input input {
+            flex: 1;
         }
 
         /* Notifications */
@@ -559,6 +640,16 @@
         }
 
         /* Responsive */
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .user-sidebar {
+                display: none;
+            }
+        }
+
         @media (max-width: 768px) {
             .nav {
                 flex-direction: column;
@@ -569,37 +660,9 @@
                 gap: 1rem;
             }
 
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
             .profiles-grid {
                 grid-template-columns: 1fr;
             }
-
-            .filter-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Profile Completion */
-        .completion-bar {
-            height: 8px;
-            background: #e9ecef;
-            border-radius: 4px;
-            margin: 1rem 0;
-            overflow: hidden;
-        }
-
-        .completion-progress {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            border-radius: 4px;
-            transition: width 0.3s;
         }
 
         .kenya-flag {
@@ -636,333 +699,67 @@
     <header class="header" id="mainHeader">
         <nav class="nav">
             <div class="logo">
-                🌊 Wetlands
+                🌊 Wetlands Premium
                 <span id="adminBadge" class="admin-badge" style="display: none;">Admin</span>
             </div>
-            <ul class="nav-links" id="userNav">
-                <li><a href="#" onclick="showSection('browse')">Browse Profiles</a></li>
-                <li><a href="#" onclick="showSection('matches')">My Matches</a></li>
-                <li><a href="#" onclick="showSection('search')">Advanced Search</a></li>
+            <ul class="nav-links" id="userNav" style="display: none;">
+                <li><a href="#" onclick="showUserSection('discover')">Discover</a></li>
+                <li><a href="#" onclick="showUserSection('matches')">Matches</a></li>
+                <li><a href="#" onclick="showUserSection('messages')">Messages</a></li>
+                <li><a href="#" onclick="showUserSection('premium')">Go Premium</a></li>
             </ul>
             <ul class="nav-links" id="adminNav" style="display: none;">
                 <li><a href="#" onclick="showAdminTab('dashboard')">Dashboard</a></li>
                 <li><a href="#" onclick="showAdminTab('users')">Users</a></li>
                 <li><a href="#" onclick="showAdminTab('reports')">Reports</a></li>
                 <li><a href="#" onclick="showAdminTab('analytics')">Analytics</a></li>
+                <li><a href="#" onclick="showAdminTab('premium')">Premium</a></li>
             </ul>
             <div class="nav-actions">
                 <span id="userWelcome" style="display: none;"></span>
-                <button class="btn btn-outline" onclick="showAuthModal()" id="authBtn">Login</button>
-                <button class="btn btn-primary" onclick="showProfileModal()" id="profileBtn" style="display: none;">My Profile</button>
+                <button class="btn btn-outline" onclick="showAuthPage()" id="authBtn">Login</button>
+                <button class="btn btn-premium" onclick="showUserSection('premium')" id="premiumBtn" style="display: none;">🌟 Premium</button>
                 <button class="btn btn-admin" onclick="showAdminPanel()" id="adminBtn" style="display: none;">Admin Panel</button>
                 <button class="btn btn-danger" onclick="logout()" id="logoutBtn" style="display: none;">Logout</button>
             </div>
         </nav>
     </header>
 
-    <!-- User Main Content -->
-    <div class="main-content" id="userContent">
-        <!-- Hero Section -->
-        <section class="hero" id="heroSection">
-            <div class="container">
-                <h1>Find Your Perfect Match in <span class="kenya-flag">Kenya</span></h1>
-                <p>Connect with genuine singles across all 47 counties. Your wetland for meaningful relationships starts here.</p>
-                <button class="btn btn-primary" onclick="showAuthModal()">Get Started - It's Free!</button>
-            </div>
-        </section>
-
-        <!-- Browse Profiles -->
-        <section class="section" id="browseSection" style="display: none;">
-            <div class="container">
-                <h2 class="section-title">Browse Profiles</h2>
-                
-                <div class="filters">
-                    <div class="filter-grid">
-                        <div class="form-group">
-                            <label class="form-label">Gender</label>
-                            <select class="form-select" id="filterGender" onchange="filterProfiles()">
-                                <option value="all">All Genders</option>
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
-                                <option value="undisclosed">Do Not Disclose</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Sexuality</label>
-                            <select class="form-select" id="filterSexuality" onchange="filterProfiles()">
-                                <option value="all">All Sexualities</option>
-                                <option value="straight">Straight</option>
-                                <option value="bisexual">Bisexual</option>
-                                <option value="gay">Gay</option>
-                                <option value="lesbian">Lesbian</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Age Range</label>
-                            <select class="form-select" id="filterAge" onchange="filterProfiles()">
-                                <option value="all">All Ages</option>
-                                <option value="18-25">18-25</option>
-                                <option value="26-35">26-35</option>
-                                <option value="36-45">36-45</option>
-                                <option value="46+">46+</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Location</label>
-                            <select class="form-select" id="filterLocation" onchange="filterProfiles()">
-                                <option value="all">All Locations</option>
-                                <option value="nairobi">Nairobi</option>
-                                <option value="mombasa">Mombasa</option>
-                                <option value="kisumu">Kisumu</option>
-                                <option value="nakuru">Nakuru</option>
-                                <option value="foreigner">Foreigner</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="profiles-grid" id="profilesGrid">
-                    <!-- Profiles will be loaded here -->
-                </div>
-            </div>
-        </section>
-
-        <!-- My Matches -->
-        <section class="section" id="matchesSection" style="display: none;">
-            <div class="container">
-                <h2 class="section-title">Your Matches</h2>
-                <div class="profiles-grid" id="matchesGrid">
-                    <!-- Matches will be loaded here -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Advanced Search -->
-        <section class="section" id="searchSection" style="display: none;">
-            <div class="container">
-                <h2 class="section-title">Advanced Search</h2>
-                <div class="form-container">
-                    <form id="searchForm" onsubmit="advancedSearch(event)">
-                        <div class="form-group">
-                            <label class="form-label">Interests</label>
-                            <input type="text" class="form-control" id="searchInterests" placeholder="e.g., hiking, reading, cooking">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Relationship Goal</label>
-                            <select class="form-select" id="searchGoal">
-                                <option value="any">Any</option>
-                                <option value="dating">Dating</option>
-                                <option value="relationship">Serious Relationship</option>
-                                <option value="friendship">Friendship</option>
-                                <option value="marriage">Marriage</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Education Level</label>
-                            <select class="form-select" id="searchEducation">
-                                <option value="any">Any</option>
-                                <option value="high-school">High School</option>
-                                <option value="college">College</option>
-                                <option value="university">University</option>
-                                <option value="postgraduate">Postgraduate</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary" style="width: 100%;">Search</button>
-                    </form>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!-- Admin Dashboard -->
-    <div class="main-content" id="adminContent" style="display: none;">
-        <div class="container">
-            <!-- Dashboard Tab -->
-            <div class="admin-section" id="dashboardTab">
-                <div class="section-title">Admin Dashboard</div>
-                
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-icon">👥</div>
-                        <div class="stat-number" id="totalUsers">0</div>
-                        <div class="stat-label">Total Users</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">❤️</div>
-                        <div class="stat-number" id="totalMatches">0</div>
-                        <div class="stat-label">Total Matches</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">⚠️</div>
-                        <div class="stat-number" id="pendingReports">0</div>
-                        <div class="stat-label">Pending Reports</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">📈</div>
-                        <div class="stat-number" id="activeToday">0</div>
-                        <div class="stat-label">Active Today</div>
-                    </div>
-                </div>
-
-                <h3 style="margin: 2rem 0 1rem 0;">Recent Activity</h3>
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>User</th>
-                            <th>Action</th>
-                            <th>Time</th>
-                            <th>Details</th>
-                        </tr>
-                    </thead>
-                    <tbody id="recentActivity">
-                        <!-- Activity will be loaded here -->
-                    </tbody>
-                </table>
+    <!-- Auth Page -->
+    <section class="auth-page" id="authPage">
+        <div class="auth-container">
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <h1 style="font-size: 2.5rem; color: var(--primary); margin-bottom: 0.5rem;">🌊</h1>
+                <h2 style="color: var(--dark); margin-bottom: 0.5rem;">Wetlands Premium</h2>
+                <p style="color: #666;">Find your perfect match in Kenya</p>
             </div>
 
-            <!-- Users Management Tab -->
-            <div class="admin-section" id="usersTab" style="display: none;">
-                <div class="section-title">User Management</div>
-                
-                <div class="filters">
-                    <div class="filter-grid">
-                        <div class="form-group">
-                            <label class="form-label">Status</label>
-                            <select class="form-select" id="adminFilterStatus" onchange="filterAdminUsers()">
-                                <option value="all">All Users</option>
-                                <option value="active">Active</option>
-                                <option value="suspended">Suspended</option>
-                                <option value="pending">Pending</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Location</label>
-                            <select class="form-select" id="adminFilterLocation" onchange="filterAdminUsers()">
-                                <option value="all">All Locations</option>
-                                <option value="nairobi">Nairobi</option>
-                                <option value="mombasa">Mombasa</option>
-                                <option value="foreigner">Foreigner</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>User</th>
-                            <th>Location</th>
-                            <th>Status</th>
-                            <th>Joined</th>
-                            <th>Matches</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="adminUsersTable">
-                        <!-- Users will be loaded here -->
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Reports Tab -->
-            <div class="admin-section" id="reportsTab" style="display: none;">
-                <div class="section-title">Report Management</div>
-                
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Reported User</th>
-                            <th>Reported By</th>
-                            <th>Reason</th>
-                            <th>Date</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="adminReportsTable">
-                        <!-- Reports will be loaded here -->
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Analytics Tab -->
-            <div class="admin-section" id="analyticsTab" style="display: none;">
-                <div class="section-title">Platform Analytics</div>
-                
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-icon">📊</div>
-                        <div class="stat-number" id="avgMatches">0</div>
-                        <div class="stat-label">Avg. Matches per User</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">📍</div>
-                        <div class="stat-number" id="topLocation">-</div>
-                        <div class="stat-label">Most Popular Location</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">🎯</div>
-                        <div class="stat-number" id="successRate">0%</div>
-                        <div class="stat-label">Match Success Rate</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">🕒</div>
-                        <div class="stat-number" id="avgTime">0h</div>
-                        <div class="stat-label">Avg. Time to First Match</div>
-                    </div>
-                </div>
-
-                <h3 style="margin: 2rem 0 1rem 0;">User Demographics</h3>
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Gender</th>
-                            <th>Count</th>
-                            <th>Percentage</th>
-                            <th>Avg. Matches</th>
-                        </tr>
-                    </thead>
-                    <tbody id="demographicsTable">
-                        <!-- Demographics will be loaded here -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <!-- Auth Modal -->
-    <div class="modal" id="authModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title" id="authModalTitle">Welcome to Wetlands</h3>
-                <button class="close-modal" onclick="closeAuthModal()">×</button>
-            </div>
-            <div class="tabs">
-                <button class="tab active" onclick="switchAuthTab('login')">Login</button>
-                <button class="tab" onclick="switchAuthTab('register')">Register</button>
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="switchAuthTab('login')">Login</button>
+                <button class="auth-tab" onclick="switchAuthTab('register')">Register</button>
             </div>
             
-            <div class="tab-content active" id="loginTab">
+            <div class="auth-content active" id="loginTab">
                 <form id="loginForm" onsubmit="handleLogin(event)">
                     <div class="form-group">
-                        <label class="form-label">Email</label>
-                        <input type="email" class="form-control" id="loginEmail" required>
+                        <label class="form-label">Email or Phone</label>
+                        <input type="text" class="form-control" id="loginIdentifier" placeholder="Email or +254..." required>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Password</label>
                         <input type="password" class="form-control" id="loginPassword" required>
                     </div>
-                    <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 1rem;">Login</button>
                 </form>
-                <div style="text-align: center; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 10px;">
+                <div style="text-align: center; padding: 1rem; background: #f8f9fa; border-radius: 10px;">
                     <p><strong>Demo Accounts:</strong></p>
                     <p><strong>Admin:</strong> admin@wetlands.com / admin123</p>
                     <p><strong>User:</strong> user@wetlands.com / user123</p>
+                    <p><strong>Phone:</strong> +254700000000 / user123</p>
                 </div>
             </div>
             
-            <div class="tab-content" id="registerTab">
+            <div class="auth-content" id="registerTab">
                 <form id="registerForm" onsubmit="handleRegister(event)">
                     <div class="form-group">
                         <label class="form-label">Full Name</label>
@@ -973,12 +770,24 @@
                         <input type="email" class="form-control" id="registerEmail" required>
                     </div>
                     <div class="form-group">
+                        <label class="form-label">Phone Number</label>
+                        <div class="phone-input">
+                            <select class="form-control" id="registerCountryCode">
+                                <option value="+254">+254 KE</option>
+                                <option value="+255">+255 TZ</option>
+                                <option value="+256">+256 UG</option>
+                                <option value="+257">+257 BI</option>
+                            </select>
+                            <input type="tel" class="form-control" id="registerPhone" placeholder="700000000" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="form-label">Password</label>
                         <input type="password" class="form-control" id="registerPassword" required>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Gender</label>
-                        <select class="form-select" id="registerGender" required>
+                        <select class="form-control" id="registerGender" required>
                             <option value="male">Male</option>
                             <option value="female">Female</option>
                             <option value="undisclosed">Do Not Disclose</option>
@@ -986,7 +795,7 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">Sexuality</label>
-                        <select class="form-select" id="registerSexuality" required>
+                        <select class="form-control" id="registerSexuality" required>
                             <option value="straight">Straight</option>
                             <option value="bisexual">Bisexual</option>
                             <option value="gay">Gay</option>
@@ -1000,8 +809,7 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">Location</label>
-                        <select class="form-select" id="registerLocation" required>
-                            <option value="">Select County</option>
+                        <select class="form-control" id="registerLocation" required>
                             <option value="nairobi">Nairobi</option>
                             <option value="mombasa">Mombasa</option>
                             <option value="kisumu">Kisumu</option>
@@ -1014,127 +822,361 @@
                 </form>
             </div>
         </div>
+    </section>
+
+    <!-- User Dashboard -->
+    <div class="user-dashboard" id="userDashboard">
+        <div class="container">
+            <div class="dashboard-grid">
+                <!-- User Sidebar -->
+                <div class="user-sidebar">
+                    <div class="user-profile-card">
+                        <div class="user-avatar" id="userAvatar">👤</div>
+                        <div class="user-name" id="sidebarUserName">User Name</div>
+                        <div class="user-location" id="sidebarUserLocation">Location</div>
+                        <div class="premium-badge" id="premiumStatus" style="display: none;">🌟 PREMIUM MEMBER</div>
+                        <button class="btn btn-premium" onclick="showUserSection('premium')" style="width: 100%;" id="upgradeBtn">Upgrade to Premium</button>
+                    </div>
+                    
+                    <ul class="sidebar-nav">
+                        <li><a href="#" class="active" onclick="showUserSection('discover')">🔍 Discover</a></li>
+                        <li><a href="#" onclick="showUserSection('matches')">💕 My Matches</a></li>
+                        <li><a href="#" onclick="showUserSection('messages')">💬 Messages</a></li>
+                        <li><a href="#" onclick="showUserSection('profile')">👤 My Profile</a></li>
+                        <li><a href="#" onclick="showUserSection('premium')">🌟 Go Premium</a></li>
+                        <li><a href="#" onclick="showUserSection('settings')">⚙️ Settings</a></li>
+                    </ul>
+                </div>
+
+                <!-- Main Content Area -->
+                <div class="main-content-area">
+                    <!-- Discover Section -->
+                    <div class="content-section active" id="discoverSection">
+                        <div class="content-header">
+                            <h2 class="content-title">Discover Profiles</h2>
+                            <div class="filters">
+                                <select class="form-control" id="discoverFilter" onchange="filterDiscoverProfiles()" style="width: 200px;">
+                                    <option value="all">All Profiles</option>
+                                    <option value="premium">Premium Only</option>
+                                    <option value="nearby">Near Me</option>
+                                    <option value="online">Online Now</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="profiles-grid" id="discoverGrid">
+                            <!-- Profiles will be loaded here -->
+                        </div>
+                    </div>
+
+                    <!-- Matches Section -->
+                    <div class="content-section" id="matchesSection">
+                        <div class="content-header">
+                            <h2 class="content-title">Your Matches</h2>
+                        </div>
+                        <div class="profiles-grid" id="matchesGrid">
+                            <!-- Matches will be loaded here -->
+                        </div>
+                    </div>
+
+                    <!-- Messages Section -->
+                    <div class="content-section" id="messagesSection">
+                        <div class="content-header">
+                            <h2 class="content-title">Messages</h2>
+                        </div>
+                        <div id="conversationsList">
+                            <!-- Conversations will be listed here -->
+                        </div>
+                        <div class="chat-container" id="chatContainer">
+                            <div class="chat-header">
+                                <h3 id="chatWithName">Chat with User</h3>
+                            </div>
+                            <div class="chat-messages" id="chatMessages">
+                                <!-- Messages will be loaded here -->
+                            </div>
+                            <div class="chat-input">
+                                <input type="text" id="messageInput" placeholder="Type your message...">
+                                <button class="btn btn-chat" onclick="sendMessage()">Send</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Premium Section -->
+                    <div class="content-section" id="premiumSection">
+                        <div class="content-header">
+                            <h2 class="content-title">Go Premium</h2>
+                        </div>
+                        <div class="premium-features">
+                            <div class="feature-card premium">
+                                <div class="feature-icon">🚀</div>
+                                <h3>Priority Visibility</h3>
+                                <p>Get shown to more potential matches first</p>
+                            </div>
+                            <div class="feature-card premium">
+                                <div class="feature-icon">💬</div>
+                                <h3>Unlimited Messages</h3>
+                                <p>Chat with all your matches without limits</p>
+                            </div>
+                            <div class="feature-card premium">
+                                <div class="feature-icon">🔍</div>
+                                <h3>Advanced Filters</h3>
+                                <p>Filter by income, education, and more</p>
+                            </div>
+                            <div class="feature-card premium">
+                                <div class="feature-icon">👀</div>
+                                <h3>See Who Liked You</h3>
+                                <p>Know who's interested before you match</p>
+                            </div>
+                        </div>
+                        <div style="text-align: center; margin-top: 3rem;">
+                            <button class="btn btn-premium" style="padding: 1.5rem 3rem; font-size: 1.2rem;">
+                                Upgrade to Premium - KSh 999/month
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div class="admin-dashboard" id="adminDashboard">
+        <div class="container">
+            <!-- Dashboard Tab -->
+            <div class="content-section active" id="adminDashboardTab">
+                <h2 class="content-title">Admin Dashboard</h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-number" id="totalUsers">0</div>
+                        <div class="stat-label">Total Users</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">❤️</div>
+                        <div class="stat-number" id="totalMatches">0</div>
+                        <div class="stat-label">Total Matches</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">💰</div>
+                        <div class="stat-number" id="premiumUsers">0</div>
+                        <div class="stat-label">Premium Users</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📈</div>
+                        <div class="stat-number" id="revenue">KSh 0</div>
+                        <div class="stat-label">Monthly Revenue</div>
+                    </div>
+                </div>
+
+                <h3 style="margin: 2rem 0 1rem 0;">Recent Activity</h3>
+                <div class="data-table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Action</th>
+                                <th>Time</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recentActivity">
+                            <!-- Activity will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Users Management Tab -->
+            <div class="content-section" id="adminUsersTab">
+                <h2 class="content-title">User Management</h2>
+                
+                <div class="filters" style="margin-bottom: 2rem;">
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <select class="form-control" id="adminFilterStatus" onchange="filterAdminUsers()">
+                            <option value="all">All Users</option>
+                            <option value="active">Active</option>
+                            <option value="premium">Premium</option>
+                            <option value="suspended">Suspended</option>
+                        </select>
+                        <input type="text" class="form-control" id="adminSearch" placeholder="Search users..." style="width: 300px;">
+                    </div>
+                </div>
+
+                <div class="data-table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Contact</th>
+                                <th>Location</th>
+                                <th>Status</th>
+                                <th>Membership</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminUsersTable">
+                            <!-- Users will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Premium Management Tab -->
+            <div class="content-section" id="adminPremiumTab">
+                <h2 class="content-title">Premium Management</h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">💰</div>
+                        <div class="stat-number" id="totalRevenue">KSh 0</div>
+                        <div class="stat-label">Total Revenue</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">👑</div>
+                        <div class="stat-number" id="premiumSubscribers">0</div>
+                        <div class="stat-label">Premium Subscribers</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📊</div>
+                        <div class="stat-number" id="conversionRate">0%</div>
+                        <div class="stat-label">Conversion Rate</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🔄</div>
+                        <div class="stat-number" id="renewalRate">0%</div>
+                        <div class="stat-label">Renewal Rate</div>
+                    </div>
+                </div>
+
+                <h3 style="margin: 2rem 0 1rem 0;">Premium Subscribers</h3>
+                <div class="data-table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Plan</th>
+                                <th>Started</th>
+                                <th>Renews</th>
+                                <th>Payment</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="premiumSubscribersTable">
+                            <!-- Premium subscribers will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Notification System -->
     <div id="notificationContainer"></div>
 
     <script>
-        // Wetlands Platform - Complete with Admin Backend
+        // Wetlands Premium Platform - Complete with All Features
         let currentUser = null;
         let allProfiles = [];
         let matches = [];
+        let conversations = {};
         let adminData = {
             users: [],
             reports: [],
             activity: [],
+            premiumSubscribers: [],
             analytics: {}
         };
 
-        // Kenyan Counties Data
-        const kenyanCounties = ["nairobi", "mombasa", "kisumu", "nakuru", "eldoret", "thika", "foreigner"];
-
-        // Sample demo profiles with Kenyan context
-        const demoProfiles = [
-            {
-                id: 1,
-                name: "Wanjiku Mwangi",
-                age: 28,
-                gender: "female",
-                sexuality: "straight",
-                location: "nairobi",
-                bio: "Nairobi-based accountant who loves hiking Ngong Hills and trying new restaurants in Westlands.",
-                interests: ["hiking", "travel", "food", "netflix"],
-                goal: "relationship",
-                education: "university",
-                avatar: "👩",
-                status: "active",
-                joined: "2024-01-15",
-                matches: 12
-            },
-            {
-                id: 2,
-                name: "Kamau Otieno",
-                age: 32,
-                gender: "male",
-                sexuality: "straight",
-                location: "mombasa",
-                bio: "Mombasa tour guide who enjoys beach life and Swahili culture. Hakuna matata!",
-                interests: ["beach", "travel", "culture", "music"],
-                goal: "dating",
-                education: "college",
-                avatar: "👨",
-                status: "active",
-                joined: "2024-01-10",
-                matches: 8
-            },
-            {
-                id: 3,
-                name: "Akeyo Atieno",
-                age: 25,
-                gender: "female",
-                sexuality: "bisexual",
-                location: "kisumu",
-                bio: "Kisumu teacher who loves lake activities and community work. Let's explore life together!",
-                interests: ["lake", "teaching", "community", "reading"],
-                goal: "relationship",
-                education: "university",
-                avatar: "💁",
-                status: "active",
-                joined: "2024-01-20",
-                matches: 15
-            },
-            {
-                id: 4,
-                name: "Kipchoge Tanui",
-                age: 30,
-                gender: "male",
-                sexuality: "gay",
-                location: "eldoret",
-                bio: "Eldoret athlete and fitness enthusiast. Love running and healthy living in the highlands.",
-                interests: ["running", "fitness", "nature", "cooking"],
-                goal: "relationship",
-                education: "college",
-                avatar: "💪",
-                status: "suspended",
-                joined: "2024-01-05",
-                matches: 5
-            }
-        ];
-
-        // Sample admin data
-        const sampleReports = [
-            {
-                id: 1,
-                reportedUser: "Kipchoge Tanui",
-                reportedBy: "Wanjiku Mwangi",
-                reason: "Inappropriate messages",
-                date: "2024-01-25",
-                status: "pending"
-            },
-            {
-                id: 2,
-                reportedUser: "John Doe",
-                reportedBy: "Kamau Otieno",
-                reason: "Fake profile",
-                date: "2024-01-24",
-                status: "resolved"
-            }
-        ];
-
-        const sampleActivity = [
-            { user: "Wanjiku Mwangi", action: "Registered", time: "2 hours ago", details: "New user from Nairobi" },
-            { user: "Kamau Otieno", action: "Match", time: "1 hour ago", details: "Matched with Akeyo Atieno" },
-            { user: "Akeyo Atieno", action: "Profile Update", time: "45 minutes ago", details: "Updated interests" }
-        ];
-
         // Initialize the platform
         function initPlatform() {
-            allProfiles = [...demoProfiles];
-            adminData.users = [...demoProfiles];
-            adminData.reports = [...sampleReports];
-            adminData.activity = [...sampleActivity];
-            
+            loadSampleData();
+            checkAuthStatus();
+        }
+
+        function loadSampleData() {
+            // Sample profiles with premium status
+            allProfiles = [
+                {
+                    id: 1,
+                    name: "Wanjiku Mwangi",
+                    age: 28,
+                    gender: "female",
+                    sexuality: "straight",
+                    location: "nairobi",
+                    bio: "Nairobi-based accountant who loves hiking Ngong Hills and trying new restaurants in Westlands.",
+                    interests: ["hiking", "travel", "food", "netflix"],
+                    goal: "relationship",
+                    education: "university",
+                    avatar: "👩",
+                    status: "active",
+                    isPremium: true,
+                    phone: "+254711000001",
+                    joined: "2024-01-15",
+                    matches: 12
+                },
+                {
+                    id: 2,
+                    name: "Kamau Otieno",
+                    age: 32,
+                    gender: "male",
+                    sexuality: "straight",
+                    location: "mombasa",
+                    bio: "Mombasa tour guide who enjoys beach life and Swahili culture. Hakuna matata!",
+                    interests: ["beach", "travel", "culture", "music"],
+                    goal: "dating",
+                    education: "college",
+                    avatar: "👨",
+                    status: "active",
+                    isPremium: false,
+                    phone: "+254711000002",
+                    joined: "2024-01-10",
+                    matches: 8
+                },
+                {
+                    id: 3,
+                    name: "Akeyo Atieno",
+                    age: 25,
+                    gender: "female",
+                    sexuality: "bisexual",
+                    location: "kisumu",
+                    bio: "Kisumu teacher who loves lake activities and community work. Let's explore life together!",
+                    interests: ["lake", "teaching", "community", "reading"],
+                    goal: "relationship",
+                    education: "university",
+                    avatar: "💁",
+                    status: "active",
+                    isPremium: true,
+                    phone: "+254711000003",
+                    joined: "2024-01-20",
+                    matches: 15
+                }
+            ];
+
+            // Sample matches
+            matches = [allProfiles[0], allProfiles[2]];
+
+            // Sample conversations
+            conversations = {
+                1: [
+                    { type: "received", text: "Hi there! I saw we matched 😊", time: "10:30 AM" },
+                    { type: "sent", text: "Hello! Yes, your profile caught my eye!", time: "10:32 AM" },
+                    { type: "received", text: "That's great! What do you enjoy doing in Nairobi?", time: "10:35 AM" }
+                ],
+                3: [
+                    { type: "received", text: "Hey! Love your profile picture 🌟", time: "09:15 AM" },
+                    { type: "sent", text: "Thank you! Yours is lovely too!", time: "09:20 AM" }
+                ]
+            };
+
+            // Admin data
+            adminData.users = [...allProfiles];
+            adminData.premiumSubscribers = allProfiles.filter(p => p.isPremium);
+            adminData.activity = [
+                { user: "Wanjiku Mwangi", action: "Upgraded to Premium", time: "2 hours ago", details: "Monthly subscription" },
+                { user: "Kamau Otieno", action: "New Match", time: "1 hour ago", details: "Matched with Akeyo Atieno" },
+                { user: "Akeyo Atieno", action: "Sent Message", time: "45 minutes ago", details: "To Wanjiku Mwangi" }
+            ];
+
             // Add admin user
             adminData.users.push({
                 id: 999,
@@ -1142,25 +1184,21 @@
                 email: "admin@wetlands.com",
                 role: "admin",
                 status: "active",
+                isPremium: true,
                 joined: "2024-01-01"
             });
-            
-            loadProfiles();
-            checkAuthStatus();
         }
 
         // Authentication Functions
-        function showAuthModal() {
-            document.getElementById('authModal').style.display = 'block';
-        }
-
-        function closeAuthModal() {
-            document.getElementById('authModal').style.display = 'none';
+        function showAuthPage() {
+            document.getElementById('authPage').style.display = 'flex';
+            document.getElementById('userDashboard').style.display = 'none';
+            document.getElementById('adminDashboard').style.display = 'none';
         }
 
         function switchAuthTab(tab) {
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.auth-content').forEach(t => t.classList.remove('active'));
             
             event.target.classList.add('active');
             document.getElementById(tab + 'Tab').classList.add('active');
@@ -1168,51 +1206,67 @@
 
         function handleLogin(event) {
             event.preventDefault();
-            const email = document.getElementById('loginEmail').value;
+            const identifier = document.getElementById('loginIdentifier').value;
             const password = document.getElementById('loginPassword').value;
 
-            // Demo login - Check for admin first
-            if (email === 'admin@wetlands.com' && password === 'admin123') {
+            // Check for admin
+            if (identifier === 'admin@wetlands.com' && password === 'admin123') {
                 currentUser = {
                     id: 999,
                     name: "System Admin",
-                    email: email,
+                    email: 'admin@wetlands.com',
                     role: "admin",
-                    location: 'nairobi'
+                    isPremium: true
                 };
                 activateAdminMode();
-                closeAuthModal();
                 showNotification('Welcome Admin! 🛡️', 'success');
                 return;
             }
 
-            // Regular user login
-            if (email && password) {
+            // Check for demo user
+            if ((identifier === 'user@wetlands.com' || identifier === '+254700000000') && password === 'user123') {
                 currentUser = {
-                    id: Date.now(),
-                    email: email,
-                    name: email.split('@')[0],
-                    age: 25,
+                    id: 100,
+                    name: "Demo User",
+                    email: 'user@wetlands.com',
+                    phone: '+254700000000',
+                    age: 28,
                     gender: 'undisclosed',
                     sexuality: 'straight',
                     location: 'nairobi',
-                    bio: '',
-                    interests: [],
-                    goal: 'dating',
-                    education: 'college',
-                    role: 'user'
+                    bio: 'Exploring meaningful connections in Kenya.',
+                    interests: ['travel', 'music', 'technology'],
+                    goal: 'relationship',
+                    education: 'university',
+                    role: 'user',
+                    status: 'active',
+                    isPremium: false,
+                    joined: '2024-01-25',
+                    matches: 3
                 };
-                
-                closeAuthModal();
                 activateUserMode();
                 showNotification('Karibu back to Wetlands! 🎉', 'success');
+                return;
             }
+
+            // Check phone login
+            const phoneUser = adminData.users.find(u => u.phone === identifier);
+            if (phoneUser && password === 'user123') {
+                currentUser = phoneUser;
+                activateUserMode();
+                showNotification('Karibu back! 📱', 'success');
+                return;
+            }
+
+            showNotification('Invalid login credentials', 'error');
         }
 
         function handleRegister(event) {
             event.preventDefault();
             const name = document.getElementById('registerName').value;
             const email = document.getElementById('registerEmail').value;
+            const countryCode = document.getElementById('registerCountryCode').value;
+            const phone = countryCode + document.getElementById('registerPhone').value;
             const password = document.getElementById('registerPassword').value;
             const gender = document.getElementById('registerGender').value;
             const sexuality = document.getElementById('registerSexuality').value;
@@ -1223,6 +1277,7 @@
                 id: Date.now(),
                 name: name,
                 email: email,
+                phone: phone,
                 age: parseInt(age),
                 gender: gender,
                 sexuality: sexuality,
@@ -1233,11 +1288,14 @@
                 education: 'college',
                 role: 'user',
                 status: 'active',
+                isPremium: false,
                 joined: new Date().toISOString().split('T')[0],
-                matches: 0
+                matches: 0,
+                avatar: gender === 'male' ? '👨' : gender === 'female' ? '👩' : '👤'
             };
 
-            // Add to admin data
+            // Add to system
+            allProfiles.push(currentUser);
             adminData.users.push(currentUser);
             adminData.activity.unshift({
                 user: name,
@@ -1246,40 +1304,53 @@
                 details: `New user from ${location}`
             });
 
-            closeAuthModal();
             activateUserMode();
             showNotification('Account created successfully! Karibu to Wetlands! 🎉', 'success');
         }
 
-        function logout() {
-            currentUser = null;
+        function activateUserMode() {
             document.body.classList.remove('admin-mode');
             document.getElementById('mainHeader').classList.remove('admin-header');
-            document.getElementById('userContent').style.display = 'block';
-            document.getElementById('adminContent').style.display = 'none';
+            document.getElementById('authPage').style.display = 'none';
+            document.getElementById('userDashboard').style.display = 'block';
+            document.getElementById('adminDashboard').style.display = 'none';
             document.getElementById('userNav').style.display = 'flex';
             document.getElementById('adminNav').style.display = 'none';
-            document.getElementById('authBtn').style.display = 'inline-block';
-            document.getElementById('profileBtn').style.display = 'none';
+            document.getElementById('authBtn').style.display = 'none';
+            document.getElementById('premiumBtn').style.display = 'inline-block';
             document.getElementById('adminBtn').style.display = 'none';
-            document.getElementById('logoutBtn').style.display = 'none';
+            document.getElementById('logoutBtn').style.display = 'inline-block';
             document.getElementById('adminBadge').style.display = 'none';
-            document.getElementById('userWelcome').style.display = 'none';
+            document.getElementById('userWelcome').style.display = 'inline';
+            document.getElementById('userWelcome').textContent = `Habari, ${currentUser.name}!`;
+
+            // Update sidebar
+            document.getElementById('sidebarUserName').textContent = currentUser.name;
+            document.getElementById('sidebarUserLocation').textContent = currentUser.location.charAt(0).toUpperCase() + currentUser.location.slice(1);
+            document.getElementById('userAvatar').textContent = currentUser.avatar;
             
-            showSection('hero');
-            showNotification('Logged out successfully. Kwaheri!', 'success');
+            if (currentUser.isPremium) {
+                document.getElementById('premiumStatus').style.display = 'inline-block';
+                document.getElementById('upgradeBtn').style.display = 'none';
+            } else {
+                document.getElementById('premiumStatus').style.display = 'none';
+                document.getElementById('upgradeBtn').style.display = 'block';
+            }
+
+            showUserSection('discover');
+            loadUserData();
         }
 
-        // Mode Activation
         function activateAdminMode() {
             document.body.classList.add('admin-mode');
             document.getElementById('mainHeader').classList.add('admin-header');
-            document.getElementById('userContent').style.display = 'none';
-            document.getElementById('adminContent').style.display = 'block';
+            document.getElementById('authPage').style.display = 'none';
+            document.getElementById('userDashboard').style.display = 'none';
+            document.getElementById('adminDashboard').style.display = 'block';
             document.getElementById('userNav').style.display = 'none';
             document.getElementById('adminNav').style.display = 'flex';
             document.getElementById('authBtn').style.display = 'none';
-            document.getElementById('profileBtn').style.display = 'none';
+            document.getElementById('premiumBtn').style.display = 'none';
             document.getElementById('adminBtn').style.display = 'none';
             document.getElementById('logoutBtn').style.display = 'inline-block';
             document.getElementById('adminBadge').style.display = 'inline-block';
@@ -1290,22 +1361,226 @@
             showAdminTab('dashboard');
         }
 
-        function activateUserMode() {
+        function logout() {
+            currentUser = null;
             document.body.classList.remove('admin-mode');
             document.getElementById('mainHeader').classList.remove('admin-header');
-            document.getElementById('userContent').style.display = 'block';
-            document.getElementById('adminContent').style.display = 'none';
-            document.getElementById('userNav').style.display = 'flex';
-            document.getElementById('adminNav').style.display = 'none';
-            document.getElementById('authBtn').style.display = 'none';
-            document.getElementById('profileBtn').style.display = 'inline-block';
-            document.getElementById('adminBtn').style.display = 'none';
-            document.getElementById('logoutBtn').style.display = 'inline-block';
-            document.getElementById('adminBadge').style.display = 'none';
-            document.getElementById('userWelcome').style.display = 'inline';
-            document.getElementById('userWelcome').textContent = `Habari, ${currentUser.name}!`;
+            showAuthPage();
+            showNotification('Logged out successfully. Kwaheri!', 'success');
+        }
+
+        // User Functions
+        function showUserSection(section) {
+            document.querySelectorAll('.content-section').forEach(sec => {
+                sec.style.display = 'none';
+            });
+            document.querySelectorAll('.sidebar-nav a').forEach(link => {
+                link.classList.remove('active');
+            });
             
-            showSection('browse');
+            document.getElementById(section + 'Section').style.display = 'block';
+            event.target.classList.add('active');
+
+            if (section === 'discover') loadDiscoverProfiles();
+            if (section === 'matches') loadMatches();
+            if (section === 'messages') loadConversations();
+        }
+
+        function loadUserData() {
+            loadDiscoverProfiles();
+            loadMatches();
+            loadConversations();
+        }
+
+        function loadDiscoverProfiles() {
+            const grid = document.getElementById('discoverGrid');
+            grid.innerHTML = '';
+
+            allProfiles.forEach(profile => {
+                if (currentUser && (profile.id === currentUser.id || matches.find(m => m.id === profile.id))) return;
+                
+                const matchScore = calculateMatchScore(profile);
+                const profileCard = createProfileCard(profile, matchScore);
+                grid.innerHTML += profileCard;
+            });
+        }
+
+        function createProfileCard(profile, matchScore) {
+            const locationNames = {
+                'nairobi': 'Nairobi', 'mombasa': 'Mombasa', 'kisumu': 'Kisumu', 
+                'nakuru': 'Nakuru', 'eldoret': 'Eldoret', 'foreigner': 'Foreigner'
+            };
+
+            return `
+                <div class="profile-card ${profile.isPremium ? 'premium' : ''}">
+                    ${profile.isPremium ? '<div class="premium-corner">PREMIUM</div>' : ''}
+                    <div class="profile-header">
+                        <div class="profile-avatar">${profile.avatar}</div>
+                        <div class="profile-name">${profile.name}</div>
+                        <div class="profile-age">${profile.age} years • ${locationNames[profile.location]}</div>
+                    </div>
+                    <div class="profile-body">
+                        <div class="profile-info">
+                            <p>${profile.bio}</p>
+                        </div>
+                        
+                        <div class="match-score">
+                            ${matchScore}% Match
+                        </div>
+                        
+                        <div class="profile-tags">
+                            ${profile.interests.map(interest => `<span class="tag">${interest}</span>`).join('')}
+                        </div>
+                        
+                        <div class="profile-actions">
+                            <button class="btn btn-primary" onclick="sendLike(${profile.id})">❤️ Like</button>
+                            <button class="btn btn-outline" onclick="viewProfile(${profile.id})">View</button>
+                            ${currentUser.isPremium ? `<button class="btn btn-chat" onclick="startChat(${profile.id})">💬 Chat</button>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function calculateMatchScore(profile) {
+            if (!currentUser) return Math.floor(Math.random() * 30) + 50;
+            
+            let score = 0;
+            const maxScore = 100;
+
+            // Age compatibility (15 points)
+            const ageDiff = Math.abs((currentUser.age || 25) - profile.age);
+            if (ageDiff <= 5) score += 15;
+            else if (ageDiff <= 10) score += 8;
+
+            // Location compatibility (20 points)
+            if (currentUser.location === profile.location) score += 20;
+
+            // Interests compatibility (30 points)
+            const commonInterests = currentUser.interests.filter(interest => 
+                profile.interests.includes(interest)
+            ).length;
+            score += (commonInterests / Math.max(currentUser.interests.length, 1)) * 30;
+
+            // Goal compatibility (20 points)
+            if (currentUser.goal === profile.goal) score += 20;
+
+            // Education compatibility (15 points)
+            if (currentUser.education === profile.education) score += 15;
+
+            return Math.min(Math.floor(score), 95);
+        }
+
+        function sendLike(profileId) {
+            const profile = allProfiles.find(p => p.id === profileId);
+            showNotification(`❤️ You liked ${profile.name}!`, 'success');
+            
+            // Simulate match
+            if (Math.random() > 0.5) {
+                if (!matches.find(m => m.id === profileId)) {
+                    matches.push(profile);
+                    showNotification(`🎉 It's a match! You and ${profile.name} like each other!`, 'success');
+                    
+                    // Start conversation
+                    if (!conversations[profileId]) {
+                        conversations[profileId] = [
+                            { type: "system", text: "You matched! Start a conversation", time: new Date().toLocaleTimeString() }
+                        ];
+                    }
+                }
+            }
+        }
+
+        function startChat(profileId) {
+            if (!currentUser.isPremium) {
+                showNotification('Upgrade to Premium to start chatting!', 'warning');
+                showUserSection('premium');
+                return;
+            }
+
+            const profile = allProfiles.find(p => p.id === profileId);
+            document.getElementById('chatWithName').textContent = `Chat with ${profile.name}`;
+            document.getElementById('chatContainer').style.display = 'block';
+            
+            // Load messages
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.innerHTML = '';
+            
+            if (conversations[profileId]) {
+                conversations[profileId].forEach(msg => {
+                    const messageDiv = document.createElement('div');
+                    messageDiv.className = `message ${msg.type === 'sent' ? 'sent' : msg.type === 'system' ? 'system' : 'received'}`;
+                    messageDiv.textContent = msg.text;
+                    chatMessages.appendChild(messageDiv);
+                });
+            }
+            
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            
+            if (message) {
+                const chatMessages = document.getElementById('chatMessages');
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'message sent';
+                messageDiv.textContent = message;
+                chatMessages.appendChild(messageDiv);
+                
+                input.value = '';
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                
+                // Simulate reply
+                setTimeout(() => {
+                    const replyDiv = document.createElement('div');
+                    replyDiv.className = 'message received';
+                    replyDiv.textContent = "That's interesting! Tell me more...";
+                    chatMessages.appendChild(replyDiv);
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 1000);
+            }
+        }
+
+        function loadMatches() {
+            const grid = document.getElementById('matchesGrid');
+            grid.innerHTML = '';
+
+            if (matches.length === 0) {
+                grid.innerHTML = '<p style="text-align: center; color: #666; font-size: 1.2rem; grid-column: 1/-1; padding: 3rem;">No matches yet. Start liking profiles to find matches! ❤️</p>';
+                return;
+            }
+
+            matches.forEach(profile => {
+                const matchScore = calculateMatchScore(profile);
+                const profileCard = createProfileCard(profile, matchScore);
+                grid.innerHTML += profileCard;
+            });
+        }
+
+        function loadConversations() {
+            const list = document.getElementById('conversationsList');
+            list.innerHTML = '';
+
+            Object.keys(conversations).forEach(profileId => {
+                const profile = allProfiles.find(p => p.id === parseInt(profileId));
+                if (profile) {
+                    const lastMessage = conversations[profileId][conversations[profileId].length - 1];
+                    const convoDiv = document.createElement('div');
+                    convoDiv.className = 'profile-card';
+                    convoDiv.innerHTML = `
+                        <div style="display: flex; align-items: center; padding: 1rem; cursor: pointer;" onclick="startChat(${profileId})">
+                            <div class="profile-avatar" style="width: 50px; height: 50px; font-size: 1.5rem; margin-right: 1rem;">${profile.avatar}</div>
+                            <div style="flex: 1;">
+                                <div style="font-weight: 600;">${profile.name}</div>
+                                <div style="color: #666; font-size: 0.9rem;">${lastMessage.text}</div>
+                            </div>
+                        </div>
+                    `;
+                    list.appendChild(convoDiv);
+                }
+            });
         }
 
         // Admin Functions
@@ -1316,35 +1591,23 @@
         }
 
         function showAdminTab(tabName) {
-            // Hide all tabs
-            document.querySelectorAll('.admin-section').forEach(tab => {
+            document.querySelectorAll('.content-section').forEach(tab => {
                 tab.style.display = 'none';
             });
             
-            // Remove active class from all tabs
-            document.querySelectorAll('.admin-tabs .tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
+            document.getElementById('admin' + tabName.charAt(0).toUpperCase() + tabName.slice(1) + 'Tab').style.display = 'block';
             
-            // Show selected tab
-            document.getElementById(tabName + 'Tab').style.display = 'block';
-            if (event) event.target.classList.add('active');
-            
-            // Load tab-specific data
             if (tabName === 'dashboard') loadAdminDashboard();
             if (tabName === 'users') loadAdminUsers();
-            if (tabName === 'reports') loadAdminReports();
-            if (tabName === 'analytics') loadAdminAnalytics();
+            if (tabName === 'premium') loadAdminPremium();
         }
 
         function loadAdminDashboard() {
-            // Update stats
             document.getElementById('totalUsers').textContent = adminData.users.length;
             document.getElementById('totalMatches').textContent = adminData.users.reduce((sum, user) => sum + (user.matches || 0), 0);
-            document.getElementById('pendingReports').textContent = adminData.reports.filter(r => r.status === 'pending').length;
-            document.getElementById('activeToday').textContent = Math.floor(adminData.users.length * 0.3); // Simulate 30% active
-            
-            // Load recent activity
+            document.getElementById('premiumUsers').textContent = adminData.premiumSubscribers.length;
+            document.getElementById('revenue').textContent = 'KSh ' + (adminData.premiumSubscribers.length * 999).toLocaleString();
+
             const activityHtml = adminData.activity.map(activity => `
                 <tr>
                     <td>${activity.user}</td>
@@ -1359,19 +1622,20 @@
         function loadAdminUsers() {
             const usersHtml = adminData.users.map(user => {
                 const statusClass = `status-${user.status}`;
+                const membership = user.isPremium ? '🌟 Premium' : 'Basic';
                 return `
                     <tr>
                         <td>
                             <strong>${user.name}</strong><br>
                             <small>${user.email}</small>
                         </td>
+                        <td>${user.phone || 'N/A'}</td>
                         <td>${user.location}</td>
                         <td><span class="user-status ${statusClass}">${user.status}</span></td>
-                        <td>${user.joined}</td>
-                        <td>${user.matches || 0}</td>
-                        <td class="table-actions">
-                            <button class="btn btn-primary" onclick="viewUser(${user.id})">View</button>
-                            <button class="btn btn-danger" onclick="suspendUser(${user.id})">Suspend</button>
+                        <td>${membership}</td>
+                        <td>
+                            <button class="btn btn-primary" onclick="adminViewUser(${user.id})">View</button>
+                            <button class="btn btn-danger" onclick="adminSuspendUser(${user.id})">Suspend</button>
                         </td>
                     </tr>
                 `;
@@ -1379,103 +1643,71 @@
             document.getElementById('adminUsersTable').innerHTML = usersHtml;
         }
 
-        function loadAdminReports() {
-            const reportsHtml = adminData.reports.map(report => {
-                const statusClass = `status-${report.status}`;
-                return `
-                    <tr>
-                        <td>${report.reportedUser}</td>
-                        <td>${report.reportedBy}</td>
-                        <td>${report.reason}</td>
-                        <td>${report.date}</td>
-                        <td><span class="user-status ${statusClass}">${report.status}</span></td>
-                        <td class="table-actions">
-                            <button class="btn btn-primary" onclick="resolveReport(${report.id})">Resolve</button>
-                            <button class="btn btn-danger" onclick="deleteReport(${report.id})">Delete</button>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
-            document.getElementById('adminReportsTable').innerHTML = reportsHtml;
+        function loadAdminPremium() {
+            document.getElementById('totalRevenue').textContent = 'KSh ' + (adminData.premiumSubscribers.length * 999 * 12).toLocaleString();
+            document.getElementById('premiumSubscribers').textContent = adminData.premiumSubscribers.length;
+            document.getElementById('conversionRate').textContent = Math.round((adminData.premiumSubscribers.length / adminData.users.length) * 100) + '%';
+            document.getElementById('renewalRate').textContent = '92%';
+
+            const subscribersHtml = adminData.premiumSubscribers.map(user => `
+                <tr>
+                    <td>${user.name}</td>
+                    <td>Monthly Premium</td>
+                    <td>${user.joined}</td>
+                    <td>${new Date(new Date(user.joined).setMonth(new Date(user.joined).getMonth() + 1)).toISOString().split('T')[0]}</td>
+                    <td>KSh 999</td>
+                    <td><span class="user-status status-active">Active</span></td>
+                </tr>
+            `).join('');
+            document.getElementById('premiumSubscribersTable').innerHTML = subscribersHtml;
         }
 
-        function loadAdminAnalytics() {
-            // Calculate analytics
-            const totalMatches = adminData.users.reduce((sum, user) => sum + (user.matches || 0), 0);
-            const avgMatches = (totalMatches / adminData.users.length).toFixed(1);
-            
-            // Find most popular location
-            const locationCount = {};
-            adminData.users.forEach(user => {
-                locationCount[user.location] = (locationCount[user.location] || 0) + 1;
-            });
-            const topLocation = Object.keys(locationCount).reduce((a, b) => locationCount[a] > locationCount[b] ? a : b);
-            
-            document.getElementById('avgMatches').textContent = avgMatches;
-            document.getElementById('topLocation').textContent = topLocation.charAt(0).toUpperCase() + topLocation.slice(1);
-            document.getElementById('successRate').textContent = '68%';
-            document.getElementById('avgTime').textContent = '24h';
-            
-            // Load demographics
-            const genderCount = {};
-            adminData.users.forEach(user => {
-                genderCount[user.gender] = (genderCount[user.gender] || 0) + 1;
-            });
-            
-            const demographicsHtml = Object.keys(genderCount).map(gender => {
-                const count = genderCount[gender];
-                const percentage = ((count / adminData.users.length) * 100).toFixed(1);
-                return `
-                    <tr>
-                        <td>${gender.charAt(0).toUpperCase() + gender.slice(1)}</td>
-                        <td>${count}</td>
-                        <td>${percentage}%</td>
-                        <td>${avgMatches}</td>
-                    </tr>
-                `;
-            }).join('');
-            document.getElementById('demographicsTable').innerHTML = demographicsHtml;
-        }
-
-        // Admin Actions
-        function viewUser(userId) {
+        function adminViewUser(userId) {
             const user = adminData.users.find(u => u.id === userId);
-            alert(`User Details:\nName: ${user.name}\nEmail: ${user.email}\nLocation: ${user.location}\nStatus: ${user.status}\nMatches: ${user.matches || 0}`);
+            alert(`User Details:\nName: ${user.name}\nEmail: ${user.email}\nPhone: ${user.phone || 'N/A'}\nLocation: ${user.location}\nStatus: ${user.status}\nPremium: ${user.isPremium ? 'Yes' : 'No'}\nMatches: ${user.matches || 0}`);
         }
 
-        function suspendUser(userId) {
+        function adminSuspendUser(userId) {
             const user = adminData.users.find(u => u.id === userId);
             user.status = user.status === 'suspended' ? 'active' : 'suspended';
             loadAdminUsers();
             showNotification(`User ${user.name} ${user.status === 'suspended' ? 'suspended' : 'activated'}`, 'warning');
         }
 
-        function resolveReport(reportId) {
-            const report = adminData.reports.find(r => r.id === reportId);
-            report.status = 'resolved';
-            loadAdminReports();
-            showNotification('Report resolved successfully', 'success');
+        // Notification System
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.getElementById('notificationContainer').appendChild(notification);
+
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, 3000);
         }
 
-        function deleteReport(reportId) {
-            adminData.reports = adminData.reports.filter(r => r.id !== reportId);
-            loadAdminReports();
-            showNotification('Report deleted', 'success');
+        function checkAuthStatus() {
+            // Check if user was previously logged in
+            const savedUser = localStorage.getItem('wetlands_user');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                if (currentUser.role === 'admin') {
+                    activateAdminMode();
+                } else {
+                    activateUserMode();
+                }
+            }
         }
-
-        function filterAdminUsers() {
-            // Implementation for filtering admin users
-            loadAdminUsers();
-        }
-
-        // ... (Rest of the user-facing functions from previous code remain the same)
-        // Profile Management, Matching Algorithm, Search Functions, etc.
 
         // Initialize the platform when page loads
         window.onload = initPlatform;
-
-        // Include all the previous user-facing functions here...
-        // (They remain exactly the same as in the previous Wetlands code)
     </script>
 </body>
 </html>
