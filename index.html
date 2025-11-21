@@ -192,6 +192,83 @@
             padding: 0 2rem;
         }
 
+        /* Auth Page */
+        .auth-page {
+            display: flex;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--water) 0%, var(--primary) 100%);
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .auth-container {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .auth-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .auth-tab {
+            padding: 1rem 2rem;
+            background: none;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .auth-tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .auth-content {
+            display: none;
+        }
+
+        .auth-content.active {
+            display: block;
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
         /* User Dashboard */
         .user-dashboard {
             display: none;
@@ -287,7 +364,7 @@
 
         .content-header {
             display: flex;
-            justify-content: between;
+            justify-content: space-between;
             align-items: center;
             margin-bottom: 2rem;
             padding-bottom: 1rem;
@@ -298,6 +375,14 @@
             font-size: 2rem;
             font-weight: 600;
             color: var(--dark);
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
         }
 
         /* Payment Modal */
@@ -448,30 +533,68 @@
             font-weight: 600;
         }
 
-        /* Forms */
-        .form-group {
-            margin-bottom: 1.5rem;
+        /* Admin Dashboard */
+        .admin-dashboard {
+            display: none;
         }
 
-        .form-label {
-            display: block;
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--admin);
+        }
+
+        .stat-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--admin);
             margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-weight: 600;
+        }
+
+        /* Data Tables */
+        .data-table-container {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .data-table th {
+            background: var(--light);
             font-weight: 600;
             color: var(--dark);
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid #e9ecef;
-            border-radius: 10px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary);
         }
 
         /* Notifications */
@@ -534,6 +657,15 @@
             -webkit-text-fill-color: transparent;
             font-weight: bold;
         }
+
+        .admin-badge {
+            background: var(--admin);
+            color: var(--white);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
@@ -575,10 +707,91 @@
                 <p style="color: #666;">Find your perfect match in Kenya</p>
             </div>
 
-            <!-- Login/Register forms would be here -->
-            <div style="text-align: center;">
-                <button class="btn btn-primary" onclick="demoLogin('user')">Demo User Login</button>
-                <button class="btn btn-admin" onclick="demoLogin('admin')" style="margin-left: 1rem;">Demo Admin Login</button>
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="switchAuthTab('login')">Login</button>
+                <button class="auth-tab" onclick="switchAuthTab('register')">Register</button>
+            </div>
+            
+            <div class="auth-content active" id="loginTab">
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label class="form-label">Email or Phone</label>
+                        <input type="text" class="form-control" id="loginIdentifier" placeholder="Email or +254..." required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-control" id="loginPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 1rem;">Login</button>
+                </form>
+                <div style="text-align: center; padding: 1rem; background: #f8f9fa; border-radius: 10px;">
+                    <p><strong>Demo Accounts:</strong></p>
+                    <p><strong>Admin:</strong> admin@wetlands.com / admin123</p>
+                    <p><strong>User:</strong> user@wetlands.com / user123</p>
+                    <p><strong>Phone:</strong> +254700000000 / user123</p>
+                </div>
+            </div>
+            
+            <div class="auth-content" id="registerTab">
+                <form id="registerForm" onsubmit="handleRegister(event)">
+                    <div class="form-group">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="registerName" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" id="registerEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Phone Number</label>
+                        <div style="display: flex; gap: 1rem;">
+                            <select class="form-control" id="registerCountryCode" style="width: 100px;">
+                                <option value="+254">+254 KE</option>
+                                <option value="+255">+255 TZ</option>
+                                <option value="+256">+256 UG</option>
+                            </select>
+                            <input type="tel" class="form-control" id="registerPhone" placeholder="700000000" required style="flex: 1;">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-control" id="registerPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Gender</label>
+                        <select class="form-control" id="registerGender" required>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="undisclosed">Do Not Disclose</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Sexuality</label>
+                        <select class="form-control" id="registerSexuality" required>
+                            <option value="straight">Straight</option>
+                            <option value="bisexual">Bisexual</option>
+                            <option value="gay">Gay</option>
+                            <option value="lesbian">Lesbian</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Age</label>
+                        <input type="number" class="form-control" id="registerAge" min="18" max="100" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Location</label>
+                        <select class="form-control" id="registerLocation" required>
+                            <option value="nairobi">Nairobi</option>
+                            <option value="mombasa">Mombasa</option>
+                            <option value="kisumu">Kisumu</option>
+                            <option value="nakuru">Nakuru</option>
+                            <option value="eldoret">Eldoret</option>
+                            <option value="foreigner">Foreigner</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-success" style="width: 100%;">Create Account</button>
+                </form>
             </div>
         </div>
     </section>
@@ -655,13 +868,7 @@
                         <div class="payment-history">
                             <h3 style="margin-bottom: 1rem;">Payment History</h3>
                             <div id="paymentHistoryList">
-                                <div class="payment-item">
-                                    <div>
-                                        <div style="font-weight: 600;">Premium Subscription</div>
-                                        <div style="color: #666; font-size: 0.9rem;">January 15, 2024</div>
-                                    </div>
-                                    <div class="payment-success">KSh 999</div>
-                                </div>
+                                <!-- Payment history will be loaded here -->
                             </div>
                         </div>
                     </div>
@@ -907,14 +1114,18 @@
                     phone: "+254711000001",
                     isPremium: true,
                     premiumSince: "2024-01-15",
-                    premiumExpires: "2024-02-15"
+                    premiumExpires: "2024-02-15",
+                    location: "nairobi",
+                    gender: "female"
                 },
                 {
                     id: 2,
                     name: "Kamau Otieno", 
                     email: "kamau@example.com",
                     phone: "+254711000002",
-                    isPremium: false
+                    isPremium: false,
+                    location: "mombasa",
+                    gender: "male"
                 },
                 {
                     id: 3,
@@ -923,7 +1134,9 @@
                     phone: "+254711000003",
                     isPremium: true,
                     premiumSince: "2024-01-20",
-                    premiumExpires: "2024-02-20"
+                    premiumExpires: "2024-02-20",
+                    location: "kisumu",
+                    gender: "female"
                 }
             ];
 
@@ -959,9 +1172,28 @@
             });
         }
 
-        // Demo login function
-        function demoLogin(role) {
-            if (role === 'admin') {
+        // Authentication Functions
+        function showAuthPage() {
+            document.getElementById('authPage').style.display = 'flex';
+            document.getElementById('userDashboard').style.display = 'none';
+            document.getElementById('adminDashboard').style.display = 'none';
+        }
+
+        function switchAuthTab(tab) {
+            document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.auth-content').forEach(t => t.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(tab + 'Tab').classList.add('active');
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const identifier = document.getElementById('loginIdentifier').value;
+            const password = document.getElementById('loginPassword').value;
+
+            // Check for admin
+            if (identifier === 'admin@wetlands.com' && password === 'admin123') {
                 currentUser = {
                     id: 999,
                     name: "System Admin",
@@ -971,26 +1203,94 @@
                 };
                 activateAdminMode();
                 showNotification('Welcome Admin! 🛡️', 'success');
-            } else {
+                return;
+            }
+
+            // Check for demo user
+            if ((identifier === 'user@wetlands.com' || identifier === '+254700000000') && password === 'user123') {
                 currentUser = {
-                    id: 1,
-                    name: "Wanjiku Mwangi",
-                    email: "wanjiku@example.com",
-                    phone: "+254711000001",
+                    id: 100,
+                    name: "Demo User",
+                    email: 'user@wetlands.com',
+                    phone: '+254700000000',
                     age: 28,
-                    gender: "female",
-                    location: "nairobi",
-                    isPremium: true,
-                    premiumSince: "2024-01-15",
-                    premiumExpires: "2024-02-15",
-                    role: "user"
+                    gender: 'undisclosed',
+                    sexuality: 'straight',
+                    location: 'nairobi',
+                    bio: 'Exploring meaningful connections in Kenya.',
+                    interests: ['travel', 'music', 'technology'],
+                    goal: 'relationship',
+                    education: 'university',
+                    role: 'user',
+                    status: 'active',
+                    isPremium: false,
+                    joined: '2024-01-25',
+                    matches: 3
                 };
                 activateUserMode();
                 showNotification('Karibu back to Wetlands! 🎉', 'success');
+                return;
             }
+
+            // Check phone login
+            const phoneUser = allProfiles.find(u => u.phone === identifier);
+            if (phoneUser && password === 'user123') {
+                currentUser = phoneUser;
+                currentUser.role = 'user'; // Ensure role is set
+                activateUserMode();
+                showNotification('Karibu back! 📱', 'success');
+                return;
+            }
+
+            showNotification('Invalid login credentials', 'error');
+        }
+
+        function handleRegister(event) {
+            event.preventDefault();
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const countryCode = document.getElementById('registerCountryCode').value;
+            const phone = countryCode + document.getElementById('registerPhone').value;
+            const password = document.getElementById('registerPassword').value;
+            const gender = document.getElementById('registerGender').value;
+            const sexuality = document.getElementById('registerSexuality').value;
+            const age = document.getElementById('registerAge').value;
+            const location = document.getElementById('registerLocation').value;
+
+            currentUser = {
+                id: Date.now(),
+                name: name,
+                email: email,
+                phone: phone,
+                age: parseInt(age),
+                gender: gender,
+                sexuality: sexuality,
+                location: location,
+                bio: '',
+                interests: [],
+                goal: 'dating',
+                education: 'college',
+                role: 'user',
+                status: 'active',
+                isPremium: false,
+                joined: new Date().toISOString().split('T')[0],
+                matches: 0,
+                avatar: gender === 'male' ? '👨' : gender === 'female' ? '👩' : '👤'
+            };
+
+            // Add to system
+            allProfiles.push(currentUser);
+            showNotification('Account created successfully! Karibu to Wetlands! 🎉', 'success');
+            
+            // Auto login after registration
+            setTimeout(() => {
+                activateUserMode();
+            }, 1000);
         }
 
         function activateUserMode() {
+            document.body.classList.remove('admin-mode');
+            document.getElementById('mainHeader').classList.remove('admin-header');
             document.getElementById('authPage').style.display = 'none';
             document.getElementById('userDashboard').style.display = 'block';
             document.getElementById('adminDashboard').style.display = 'none';
@@ -998,16 +1298,24 @@
             document.getElementById('adminNav').style.display = 'none';
             document.getElementById('authBtn').style.display = 'none';
             document.getElementById('premiumBtn').style.display = 'inline-block';
+            document.getElementById('adminBtn').style.display = 'none';
             document.getElementById('logoutBtn').style.display = 'inline-block';
+            document.getElementById('adminBadge').style.display = 'none';
             document.getElementById('userWelcome').style.display = 'inline';
             document.getElementById('userWelcome').textContent = `Habari, ${currentUser.name}!`;
 
-            // Update user interface
+            // Update sidebar
+            document.getElementById('sidebarUserName').textContent = currentUser.name;
+            document.getElementById('sidebarUserLocation').textContent = currentUser.location.charAt(0).toUpperCase() + currentUser.location.slice(1);
+            document.getElementById('userAvatar').textContent = currentUser.avatar || '👤';
+            
             updateUserSubscriptionDisplay();
+            showUserSection('premium');
         }
 
         function activateAdminMode() {
             document.body.classList.add('admin-mode');
+            document.getElementById('mainHeader').classList.add('admin-header');
             document.getElementById('authPage').style.display = 'none';
             document.getElementById('userDashboard').style.display = 'none';
             document.getElementById('adminDashboard').style.display = 'block';
@@ -1015,6 +1323,7 @@
             document.getElementById('adminNav').style.display = 'flex';
             document.getElementById('authBtn').style.display = 'none';
             document.getElementById('premiumBtn').style.display = 'none';
+            document.getElementById('adminBtn').style.display = 'none';
             document.getElementById('logoutBtn').style.display = 'inline-block';
             document.getElementById('adminBadge').style.display = 'inline-block';
             document.getElementById('userWelcome').style.display = 'inline';
@@ -1027,14 +1336,22 @@
         function logout() {
             currentUser = null;
             document.body.classList.remove('admin-mode');
+            document.getElementById('mainHeader').classList.remove('admin-header');
             showAuthPage();
             showNotification('Logged out successfully. Kwaheri!', 'success');
         }
 
-        function showAuthPage() {
-            document.getElementById('authPage').style.display = 'flex';
-            document.getElementById('userDashboard').style.display = 'none';
-            document.getElementById('adminDashboard').style.display = 'none';
+        function checkAuthStatus() {
+            // Check if user was previously logged in
+            const savedUser = localStorage.getItem('wetlands_user');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                if (currentUser.role === 'admin') {
+                    activateAdminMode();
+                } else {
+                    activateUserMode();
+                }
+            }
         }
 
         // User Subscription Management
@@ -1043,4 +1360,356 @@
             
             if (isPremium) {
                 document.getElementById('premiumStatus').style.display = 'inline-block';
-                document.getElementById('currentPlan').
+                document.getElementById('currentPlan').style.display = 'inline-block';
+                document.getElementById('basicPlan').style.display = 'none';
+                document.getElementById('subscriptionStatus').textContent = 'Active';
+                document.getElementById('subscriptionSince').textContent = currentUser.premiumSince || '2024-01-15';
+                document.getElementById('subscriptionRenews').textContent = currentUser.premiumExpires || '2024-02-15';
+                document.getElementById('upgradeActionBtn').style.display = 'none';
+                document.getElementById('cancelBtn').style.display = 'inline-block';
+                document.getElementById('upgradeBtn').style.display = 'none';
+            } else {
+                document.getElementById('premiumStatus').style.display = 'none';
+                document.getElementById('currentPlan').style.display = 'none';
+                document.getElementById('basicPlan').style.display = 'inline-block';
+                document.getElementById('subscriptionStatus').textContent = 'Inactive';
+                document.getElementById('subscriptionSince').textContent = '-';
+                document.getElementById('subscriptionRenews').textContent = '-';
+                document.getElementById('upgradeActionBtn').style.display = 'inline-block';
+                document.getElementById('cancelBtn').style.display = 'none';
+                document.getElementById('upgradeBtn').style.display = 'block';
+            }
+
+            // Load payment history
+            loadUserPaymentHistory();
+        }
+
+        function loadUserPaymentHistory() {
+            const userPayments = payments.filter(p => p.userId === currentUser.id);
+            const historyList = document.getElementById('paymentHistoryList');
+            
+            if (userPayments.length === 0) {
+                historyList.innerHTML = '<p style="text-align: center; color: #666; padding: 2rem;">No payment history found</p>';
+                return;
+            }
+
+            historyList.innerHTML = userPayments.map(payment => `
+                <div class="payment-item">
+                    <div>
+                        <div style="font-weight: 600;">Premium Subscription</div>
+                        <div style="color: #666; font-size: 0.9rem;">${payment.date} • ${payment.method.toUpperCase()}</div>
+                    </div>
+                    <div class="payment-success">KSh ${payment.amount}</div>
+                </div>
+            `).join('');
+        }
+
+        // Payment Modal Functions
+        function showPaymentModal() {
+            document.getElementById('paymentModal').style.display = 'block';
+        }
+
+        function closePaymentModal() {
+            document.getElementById('paymentModal').style.display = 'none';
+            // Reset payment options
+            document.querySelectorAll('.payment-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            document.querySelectorAll('.payment-details').forEach(detail => {
+                detail.style.display = 'none';
+            });
+        }
+
+        function selectPaymentOption(method) {
+            // Remove selected class from all options
+            document.querySelectorAll('.payment-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            // Hide all payment details
+            document.querySelectorAll('.payment-details').forEach(detail => {
+                detail.style.display = 'none';
+            });
+            
+            // Add selected class to clicked option
+            event.currentTarget.classList.add('selected');
+            // Show corresponding payment details
+            document.getElementById(method + 'Details').style.display = 'block';
+        }
+
+        function processMpesaPayment() {
+            const phone = document.getElementById('mpesaPhone').value;
+            if (!phone) {
+                showNotification('Please enter your M-Pesa phone number', 'error');
+                return;
+            }
+
+            showNotification('Processing M-Pesa payment...', 'warning');
+            
+            // Simulate payment processing
+            setTimeout(() => {
+                upgradeUserToPremium('mpesa', 'MPE' + Date.now());
+                showNotification('Payment successful! You are now a Premium member! 🎉', 'success');
+                closePaymentModal();
+            }, 2000);
+        }
+
+        function processCardPayment() {
+            const cardNumber = document.getElementById('cardNumber').value;
+            const cardExpiry = document.getElementById('cardExpiry').value;
+            const cardCvv = document.getElementById('cardCvv').value;
+
+            if (!cardNumber || !cardExpiry || !cardCvv) {
+                showNotification('Please fill all card details', 'error');
+                return;
+            }
+
+            showNotification('Processing card payment...', 'warning');
+            
+            // Simulate payment processing
+            setTimeout(() => {
+                upgradeUserToPremium('card', 'CARD' + Date.now());
+                showNotification('Payment successful! You are now a Premium member! 🎉', 'success');
+                closePaymentModal();
+            }, 2000);
+        }
+
+        function processManualPayment() {
+            showNotification('Please complete your bank transfer and contact support with transaction details', 'warning');
+            closePaymentModal();
+        }
+
+        function upgradeUserToPremium(method, transactionId) {
+            // Update current user
+            currentUser.isPremium = true;
+            currentUser.premiumSince = new Date().toISOString().split('T')[0];
+            
+            // Calculate expiry date (1 month from now)
+            const expiryDate = new Date();
+            expiryDate.setMonth(expiryDate.getMonth() + 1);
+            currentUser.premiumExpires = expiryDate.toISOString().split('T')[0];
+
+            // Record payment
+            const newPayment = {
+                id: payments.length + 1,
+                userId: currentUser.id,
+                amount: 999,
+                method: method,
+                status: 'completed',
+                date: new Date().toISOString().split('T')[0],
+                transactionId: transactionId
+            };
+            payments.push(newPayment);
+
+            // Update system data
+            const userIndex = allProfiles.findIndex(u => u.id === currentUser.id);
+            if (userIndex !== -1) {
+                allProfiles[userIndex] = { ...allProfiles[userIndex], ...currentUser };
+            }
+
+            // Update UI
+            updateUserSubscriptionDisplay();
+        }
+
+        function cancelSubscription() {
+            if (confirm('Are you sure you want to cancel your Premium subscription?')) {
+                currentUser.isPremium = false;
+                currentUser.premiumSince = null;
+                currentUser.premiumExpires = null;
+                
+                // Update system data
+                const userIndex = allProfiles.findIndex(u => u.id === currentUser.id);
+                if (userIndex !== -1) {
+                    allProfiles[userIndex] = { ...allProfiles[userIndex], ...currentUser };
+                }
+
+                updateUserSubscriptionDisplay();
+                showNotification('Subscription cancelled. You can re-subscribe anytime.', 'warning');
+            }
+        }
+
+        // Admin Functions
+        function showAdminPanel() {
+            if (currentUser && currentUser.role === 'admin') {
+                activateAdminMode();
+            }
+        }
+
+        function showAdminTab(tabName) {
+            document.querySelectorAll('.content-section').forEach(tab => {
+                tab.style.display = 'none';
+            });
+            
+            document.getElementById('admin' + tabName.charAt(0).toUpperCase() + tabName.slice(1) + 'Tab').style.display = 'block';
+            
+            if (tabName === 'premium') loadAdminPremium();
+            if (tabName === 'payments') loadAdminPayments();
+        }
+
+        function loadAdminDashboard() {
+            // This would load admin dashboard data
+        }
+
+        function loadAdminPremium() {
+            // Update stats
+            const premiumUsers = allProfiles.filter(u => u.isPremium && u.role !== 'admin');
+            const totalRevenue = payments.reduce((sum, payment) => sum + payment.amount, 0);
+            
+            document.getElementById('totalRevenue').textContent = 'KSh ' + totalRevenue.toLocaleString();
+            document.getElementById('premiumSubscribers').textContent = premiumUsers.length;
+            document.getElementById('conversionRate').textContent = Math.round((premiumUsers.length / allProfiles.filter(u => u.role !== 'admin').length) * 100) + '%';
+            document.getElementById('renewalRate').textContent = '92%';
+
+            // Load user select for manual upgrade
+            const userSelect = document.getElementById('adminUserSelect');
+            userSelect.innerHTML = '<option value="">Choose a user...</option>' +
+                allProfiles.filter(u => u.role !== 'admin').map(user => 
+                    `<option value="${user.id}">${user.name} (${user.email})</option>`
+                ).join('');
+
+            // Load premium subscribers table
+            const subscribersHtml = premiumUsers.map(user => `
+                <tr>
+                    <td>${user.name}</td>
+                    <td>Monthly Premium</td>
+                    <td>${user.premiumSince || '-'}</td>
+                    <td>${user.premiumExpires || '-'}</td>
+                    <td>KSh 999</td>
+                    <td><span style="color: var(--success); font-weight: 600;">Active</span></td>
+                    <td>
+                        <button class="btn btn-danger" onclick="adminCancelSubscription(${user.id})">Cancel</button>
+                    </td>
+                </tr>
+            `).join('');
+            document.getElementById('premiumSubscribersTable').innerHTML = subscribersHtml;
+        }
+
+        function loadAdminPayments() {
+            const successfulPayments = payments.filter(p => p.status === 'completed');
+            const pendingPayments = payments.filter(p => p.status === 'pending');
+            const failedPayments = payments.filter(p => p.status === 'failed');
+
+            document.getElementById('totalPayments').textContent = payments.length;
+            document.getElementById('successfulPayments').textContent = successfulPayments.length;
+            document.getElementById('pendingPayments').textContent = pendingPayments.length;
+            document.getElementById('failedPayments').textContent = failedPayments.length;
+
+            const paymentsHtml = payments.map(payment => {
+                const user = allProfiles.find(u => u.id === payment.userId);
+                const statusClass = payment.status === 'completed' ? 'payment-success' : 
+                                  payment.status === 'pending' ? 'payment-pending' : 'payment-error';
+                
+                return `
+                    <tr>
+                        <td>${user ? user.name : 'Unknown User'}</td>
+                        <td>KSh ${payment.amount}</td>
+                        <td>${payment.method.toUpperCase()}</td>
+                        <td>${payment.date}</td>
+                        <td class="${statusClass}">${payment.status}</td>
+                        <td>${payment.transactionId}</td>
+                        <td>
+                            <button class="btn btn-primary">View</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+            document.getElementById('paymentsTable').innerHTML = paymentsHtml;
+        }
+
+        function adminManualUpgrade() {
+            const userId = parseInt(document.getElementById('adminUserSelect').value);
+            const planDuration = parseInt(document.getElementById('adminPlanDuration').value);
+            const paymentMethod = document.getElementById('adminPaymentMethod').value;
+            const transactionId = document.getElementById('adminTransactionId').value;
+
+            if (!userId) {
+                showNotification('Please select a user', 'error');
+                return;
+            }
+
+            const user = allProfiles.find(u => u.id === userId);
+            if (!user) {
+                showNotification('User not found', 'error');
+                return;
+            }
+
+            // Calculate amount based on duration
+            const amount = 999 * planDuration;
+
+            // Upgrade user
+            user.isPremium = true;
+            user.premiumSince = new Date().toISOString().split('T')[0];
+            
+            const expiryDate = new Date();
+            expiryDate.setMonth(expiryDate.getMonth() + planDuration);
+            user.premiumExpires = expiryDate.toISOString().split('T')[0];
+
+            // Record payment
+            const newPayment = {
+                id: payments.length + 1,
+                userId: user.id,
+                amount: amount,
+                method: paymentMethod,
+                status: 'completed',
+                date: new Date().toISOString().split('T')[0],
+                transactionId: transactionId || 'MANUAL' + Date.now()
+            };
+            payments.push(newPayment);
+
+            showNotification(`Successfully upgraded ${user.name} to Premium!`, 'success');
+            
+            // Reset form
+            document.getElementById('adminUserSelect').value = '';
+            document.getElementById('adminTransactionId').value = '';
+            
+            // Reload data
+            loadAdminPremium();
+        }
+
+        function adminCancelSubscription(userId) {
+            const user = allProfiles.find(u => u.id === userId);
+            if (user && confirm(`Cancel Premium subscription for ${user.name}?`)) {
+                user.isPremium = false;
+                user.premiumSince = null;
+                user.premiumExpires = null;
+                showNotification(`Subscription cancelled for ${user.name}`, 'warning');
+                loadAdminPremium();
+            }
+        }
+
+        // User Navigation
+        function showUserSection(section) {
+            document.querySelectorAll('.content-section').forEach(sec => {
+                sec.style.display = 'none';
+            });
+            document.querySelectorAll('.sidebar-nav a').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            document.getElementById(section + 'Section').style.display = 'block';
+            event.target.classList.add('active');
+        }
+
+        // Notification System
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.getElementById('notificationContainer').appendChild(notification);
+
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, 3000);
+        }
+
+        // Initialize the platform when page loads
+        window.onload = initPlatform;
+    </script>
+</body>
+</html>
