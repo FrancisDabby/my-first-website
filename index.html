@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MatchMaker - Find Your Perfect Partner</title>
+    <title>Wetlands - Find Your Perfect Match in Kenya</title>
     <style>
         * {
             margin: 0;
@@ -13,18 +13,19 @@
         }
 
         :root {
-            --primary: #ff6b6b;
-            --secondary: #ff8e8e;
-            --accent: #4ecdc4;
+            --primary: #2e8b57;
+            --secondary: #3cb371;
+            --accent: #20b2aa;
             --dark: #2c3e50;
             --light: #f8f9fa;
             --white: #ffffff;
             --success: #2ecc71;
             --warning: #f39c12;
+            --water: #87ceeb;
         }
 
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--water) 0%, var(--primary) 100%);
             color: #333;
             min-height: 100vh;
         }
@@ -469,6 +470,14 @@
             border-radius: 4px;
             transition: width 0.3s;
         }
+
+        .kenya-flag {
+            color: #000000;
+            background: linear-gradient(90deg, #000000 33%, #FF0000 33%, #FF0000 66%, #006600 66%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -476,7 +485,7 @@
     <header class="header">
         <nav class="nav">
             <div class="logo">
-                💕 MatchMaker
+                🌊 Wetlands
             </div>
             <ul class="nav-links">
                 <li><a href="#" onclick="showSection('browse')">Browse Profiles</a></li>
@@ -496,8 +505,8 @@
         <!-- Hero Section -->
         <section class="hero" id="heroSection">
             <div class="container">
-                <h1>Find Your Perfect Match</h1>
-                <p>Join thousands of singles finding meaningful connections through our intelligent matching system</p>
+                <h1>Find Your Perfect Match in <span class="kenya-flag">Kenya</span></h1>
+                <p>Connect with genuine singles across all 47 counties. Your wetland for meaningful relationships starts here.</p>
                 <button class="btn btn-primary" onclick="showAuthModal()">Get Started - It's Free!</button>
             </div>
         </section>
@@ -515,6 +524,17 @@
                                 <option value="all">All Genders</option>
                                 <option value="male">Male</option>
                                 <option value="female">Female</option>
+                                <option value="undisclosed">Do Not Disclose</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Sexuality</label>
+                            <select class="form-select" id="filterSexuality" onchange="filterProfiles()">
+                                <option value="all">All Sexualities</option>
+                                <option value="straight">Straight</option>
+                                <option value="bisexual">Bisexual</option>
+                                <option value="gay">Gay</option>
+                                <option value="lesbian">Lesbian</option>
                                 <option value="other">Other</option>
                             </select>
                         </div>
@@ -532,10 +552,11 @@
                             <label class="form-label">Location</label>
                             <select class="form-select" id="filterLocation" onchange="filterProfiles()">
                                 <option value="all">All Locations</option>
-                                <option value="new-york">New York</option>
-                                <option value="los-angeles">Los Angeles</option>
-                                <option value="chicago">Chicago</option>
-                                <option value="miami">Miami</option>
+                                <option value="nairobi">Nairobi</option>
+                                <option value="mombasa">Mombasa</option>
+                                <option value="kisumu">Kisumu</option>
+                                <option value="nakuru">Nakuru</option>
+                                <option value="foreigner">Foreigner</option>
                             </select>
                         </div>
                     </div>
@@ -582,9 +603,9 @@
                             <select class="form-select" id="searchEducation">
                                 <option value="any">Any</option>
                                 <option value="high-school">High School</option>
-                                <option value="bachelors">Bachelor's Degree</option>
-                                <option value="masters">Master's Degree</option>
-                                <option value="phd">PhD</option>
+                                <option value="college">College</option>
+                                <option value="university">University</option>
+                                <option value="postgraduate">Postgraduate</option>
                             </select>
                         </div>
                         <button type="submit" class="btn btn-primary" style="width: 100%;">Search</button>
@@ -598,7 +619,7 @@
     <div class="modal" id="authModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="authModalTitle">Welcome to MatchMaker</h3>
+                <h3 class="modal-title" id="authModalTitle">Welcome to Wetlands</h3>
                 <button class="close-modal" onclick="closeAuthModal()">×</button>
             </div>
             <div class="tabs">
@@ -639,12 +660,44 @@
                         <select class="form-select" id="registerGender" required>
                             <option value="male">Male</option>
                             <option value="female">Female</option>
+                            <option value="undisclosed">Do Not Disclose</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Sexuality</label>
+                        <select class="form-select" id="registerSexuality" required>
+                            <option value="straight">Straight</option>
+                            <option value="bisexual">Bisexual</option>
+                            <option value="gay">Gay</option>
+                            <option value="lesbian">Lesbian</option>
                             <option value="other">Other</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Age</label>
                         <input type="number" class="form-control" id="registerAge" min="18" max="100" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Location</label>
+                        <select class="form-select" id="registerLocation" required>
+                            <option value="">Select County</option>
+                            <option value="nairobi">Nairobi</option>
+                            <option value="mombasa">Mombasa</option>
+                            <option value="kisumu">Kisumu</option>
+                            <option value="nakuru">Nakuru</option>
+                            <option value="eldoret">Eldoret</option>
+                            <option value="thika">Thika</option>
+                            <option value="malindi">Malindi</option>
+                            <option value="kitale">Kitale</option>
+                            <option value="garissa">Garissa</option>
+                            <option value="kakamega">Kakamega</option>
+                            <option value="kisii">Kisii</option>
+                            <option value="meru">Meru</option>
+                            <option value="nyeri">Nyeri</option>
+                            <option value="machakos">Machakos</option>
+                            <option value="foreigner">Foreigner</option>
+                            <!-- More counties can be added -->
+                        </select>
                     </div>
                     <button type="submit" class="btn btn-success" style="width: 100%;">Create Account</button>
                 </form>
@@ -681,10 +734,21 @@
                 <div class="form-group">
                     <label class="form-label">Location</label>
                     <select class="form-select" id="profileLocation">
-                        <option value="new-york">New York</option>
-                        <option value="los-angeles">Los Angeles</option>
-                        <option value="chicago">Chicago</option>
-                        <option value="miami">Miami</option>
+                        <option value="nairobi">Nairobi</option>
+                        <option value="mombasa">Mombasa</option>
+                        <option value="kisumu">Kisumu</option>
+                        <option value="nakuru">Nakuru</option>
+                        <option value="eldoret">Eldoret</option>
+                        <option value="thika">Thika</option>
+                        <option value="malindi">Malindi</option>
+                        <option value="kitale">Kitale</option>
+                        <option value="garissa">Garissa</option>
+                        <option value="kakamega">Kakamega</option>
+                        <option value="kisii">Kisii</option>
+                        <option value="meru">Meru</option>
+                        <option value="nyeri">Nyeri</option>
+                        <option value="machakos">Machakos</option>
+                        <option value="foreigner">Foreigner</option>
                     </select>
                 </div>
                 
@@ -702,9 +766,9 @@
                     <label class="form-label">Education</label>
                     <select class="form-select" id="profileEducation">
                         <option value="high-school">High School</option>
-                        <option value="bachelors">Bachelor's Degree</option>
-                        <option value="masters">Master's Degree</option>
-                        <option value="phd">PhD</option>
+                        <option value="college">College</option>
+                        <option value="university">University</option>
+                        <option value="postgraduate">Postgraduate</option>
                     </select>
                 </div>
                 
@@ -717,60 +781,101 @@
     <div id="notificationContainer"></div>
 
     <script>
-        // MatchMaker Dating Platform - Complete JavaScript Code
+        // Wetlands Dating Platform - Complete JavaScript Code
         let currentUser = null;
         let allProfiles = [];
         let matches = [];
 
-        // Sample demo profiles
+        // Kenyan Counties Data
+        const kenyanCounties = [
+            "nairobi", "mombasa", "kisumu", "nakuru", "eldoret", "thika", "malindi", "kitale",
+            "garissa", "kakamega", "kisii", "meru", "nyeri", "machakos", "embu", "nyahururu",
+            "lamu", "voi", "bungoma", "busia", "homa-bay", "kajiado", "kericho", "kiambu",
+            "kilifi", "kirinyaga", "kitui", "kwale", "laikipia", "lamu", "machakos", "makueni",
+            "mandera", "marsabit", "migori", "muranga", "nandi", "narok", "nyamira", "nyandarua",
+            "samburu", "siaya", "taita-taveta", "tana-river", "tharaka-nithi", "trans-nzoia",
+            "turbo", "uasin-gishu", "vihiga", "wajir", "west-pokot", "foreigner"
+        ];
+
+        // Sample demo profiles with Kenyan context
         const demoProfiles = [
             {
                 id: 1,
-                name: "Sarah Johnson",
+                name: "Wanjiku Mwangi",
                 age: 28,
                 gender: "female",
-                location: "new-york",
-                bio: "Adventure seeker and coffee lover. Looking for someone to explore the world with.",
-                interests: ["hiking", "travel", "photography", "coffee"],
+                sexuality: "straight",
+                location: "nairobi",
+                bio: "Nairobi-based accountant who loves hiking Ngong Hills and trying new restaurants in Westlands.",
+                interests: ["hiking", "travel", "food", "netflix"],
                 goal: "relationship",
-                education: "masters",
+                education: "university",
                 avatar: "👩"
             },
             {
                 id: 2,
-                name: "Mike Chen",
+                name: "Kamau Otieno",
                 age: 32,
                 gender: "male",
-                location: "los-angeles",
-                bio: "Software developer who loves hiking and trying new restaurants. Let's build something amazing together!",
-                interests: ["coding", "hiking", "food", "movies"],
+                sexuality: "straight",
+                location: "mombasa",
+                bio: "Mombasa tour guide who enjoys beach life and Swahili culture. Hakuna matata!",
+                interests: ["beach", "travel", "culture", "music"],
                 goal: "dating",
-                education: "bachelors",
+                education: "college",
                 avatar: "👨"
             },
             {
                 id: 3,
-                name: "Emily Davis",
+                name: "Akeyo Atieno",
                 age: 25,
                 gender: "female",
-                location: "chicago",
-                bio: "Art teacher and yoga enthusiast. Love quiet evenings and deep conversations.",
-                interests: ["art", "yoga", "reading", "cooking"],
+                sexuality: "bisexual",
+                location: "kisumu",
+                bio: "Kisumu teacher who loves lake activities and community work. Let's explore life together!",
+                interests: ["lake", "teaching", "community", "reading"],
                 goal: "relationship",
-                education: "bachelors",
+                education: "university",
                 avatar: "💁"
             },
             {
                 id: 4,
-                name: "Alex Rodriguez",
+                name: "Kipchoge Tanui",
                 age: 30,
                 gender: "male",
-                location: "miami",
-                bio: "Fitness coach and beach lover. Always up for an adventure and making people smile.",
-                interests: ["fitness", "beach", "travel", "music"],
-                goal: "marriage",
-                education: "high-school",
+                sexuality: "gay",
+                location: "eldoret",
+                bio: "Eldoret athlete and fitness enthusiast. Love running and healthy living in the highlands.",
+                interests: ["running", "fitness", "nature", "cooking"],
+                goal: "relationship",
+                education: "college",
                 avatar: "💪"
+            },
+            {
+                id: 5,
+                name: "Makena Njeru",
+                age: 26,
+                gender: "female",
+                sexuality: "lesbian",
+                location: "nakuru",
+                bio: "Nakuru wildlife enthusiast. Enjoy game drives in Lake Nakuru National Park and photography.",
+                interests: ["wildlife", "photography", "conservation", "art"],
+                goal: "friendship",
+                education: "university",
+                avatar: "🌿"
+            },
+            {
+                id: 6,
+                name: "David Smith",
+                age: 29,
+                gender: "male",
+                sexuality: "straight",
+                location: "foreigner",
+                bio: "Expat from UK working in tech. Exploring Kenya and learning Swahili. Karibu sana!",
+                interests: ["tech", "travel", "language", "adventure"],
+                goal: "dating",
+                education: "postgraduate",
+                avatar: "👨‍💼"
             }
         ];
 
@@ -803,24 +908,25 @@
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
 
-            // Demo login - in real app, this would check against a database
+            // Demo login
             if (email && password) {
                 currentUser = {
                     id: Date.now(),
                     email: email,
                     name: email.split('@')[0],
                     age: 25,
-                    gender: 'other',
-                    location: 'new-york',
+                    gender: 'undisclosed',
+                    sexuality: 'straight',
+                    location: 'nairobi',
                     bio: '',
                     interests: [],
                     goal: 'dating',
-                    education: 'bachelors'
+                    education: 'college'
                 };
                 
                 closeAuthModal();
                 updateUI();
-                showNotification('Welcome back! 🎉', 'success');
+                showNotification('Karibu back to Wetlands! 🎉', 'success');
             }
         }
 
@@ -830,7 +936,9 @@
             const email = document.getElementById('registerEmail').value;
             const password = document.getElementById('registerPassword').value;
             const gender = document.getElementById('registerGender').value;
+            const sexuality = document.getElementById('registerSexuality').value;
             const age = document.getElementById('registerAge').value;
+            const location = document.getElementById('registerLocation').value;
 
             currentUser = {
                 id: Date.now(),
@@ -838,23 +946,24 @@
                 email: email,
                 age: parseInt(age),
                 gender: gender,
-                location: 'new-york',
+                sexuality: sexuality,
+                location: location,
                 bio: '',
                 interests: [],
                 goal: 'dating',
-                education: 'bachelors'
+                education: 'college'
             };
 
             closeAuthModal();
             updateUI();
-            showNotification('Account created successfully! 🎉', 'success');
+            showNotification('Account created successfully! Karibu to Wetlands! 🎉', 'success');
         }
 
         function logout() {
             currentUser = null;
             updateUI();
             showSection('hero');
-            showNotification('Logged out successfully', 'success');
+            showNotification('Logged out successfully. Kwaheri!', 'success');
         }
 
         // Profile Management
@@ -909,7 +1018,7 @@
             grid.innerHTML = '';
 
             allProfiles.forEach(profile => {
-                if (currentUser && profile.id === currentUser.id) return; // Don't show own profile
+                if (currentUser && profile.id === currentUser.id) return;
                 
                 const matchScore = calculateMatchScore(profile);
                 const profileCard = createProfileCard(profile, matchScore);
@@ -918,15 +1027,28 @@
         }
 
         function createProfileCard(profile, matchScore) {
+            const locationNames = {
+                'nairobi': 'Nairobi', 'mombasa': 'Mombasa', 'kisumu': 'Kisumu', 'nakuru': 'Nakuru',
+                'eldoret': 'Eldoret', 'thika': 'Thika', 'malindi': 'Malindi', 'kitale': 'Kitale',
+                'garissa': 'Garissa', 'kakamega': 'Kakamega', 'kisii': 'Kisii', 'meru': 'Meru',
+                'nyeri': 'Nyeri', 'machakos': 'Machakos', 'foreigner': 'Foreigner'
+            };
+
+            const sexualityNames = {
+                'straight': 'Straight', 'bisexual': 'Bisexual', 'gay': 'Gay', 
+                'lesbian': 'Lesbian', 'other': 'Other'
+            };
+
             return `
                 <div class="profile-card">
                     <div class="profile-header">
                         <div class="profile-avatar">${profile.avatar}</div>
                         <div class="profile-name">${profile.name}</div>
-                        <div class="profile-age">${profile.age} years old</div>
+                        <div class="profile-age">${profile.age} years • ${locationNames[profile.location]}</div>
                     </div>
                     <div class="profile-body">
                         <div class="profile-info">
+                            <p><strong>Sexuality:</strong> ${sexualityNames[profile.sexuality]}</p>
                             <p>${profile.bio}</p>
                         </div>
                         
@@ -953,43 +1075,60 @@
 
         // Matching Algorithm
         function calculateMatchScore(profile) {
-            if (!currentUser) return Math.floor(Math.random() * 30) + 50; // Random score for demo
+            if (!currentUser) return Math.floor(Math.random() * 30) + 50;
             
             let score = 0;
             const maxScore = 100;
 
-            // Age compatibility (20 points)
+            // Age compatibility (15 points)
             const ageDiff = Math.abs((currentUser.age || 25) - profile.age);
-            if (ageDiff <= 5) score += 20;
-            else if (ageDiff <= 10) score += 10;
+            if (ageDiff <= 5) score += 15;
+            else if (ageDiff <= 10) score += 8;
 
             // Location compatibility (20 points)
             if (currentUser.location === profile.location) score += 20;
 
-            // Interests compatibility (30 points)
+            // Sexuality compatibility (25 points)
+            if (currentUser.sexuality === profile.sexuality) score += 25;
+            else if ((currentUser.sexuality === 'bisexual' || profile.sexuality === 'bisexual') && 
+                     compatibleSexualities(currentUser.sexuality, profile.sexuality)) {
+                score += 15;
+            }
+
+            // Interests compatibility (25 points)
             const commonInterests = currentUser.interests.filter(interest => 
                 profile.interests.includes(interest)
             ).length;
-            score += (commonInterests / Math.max(currentUser.interests.length, 1)) * 30;
+            score += (commonInterests / Math.max(currentUser.interests.length, 1)) * 25;
 
-            // Goal compatibility (20 points)
-            if (currentUser.goal === profile.goal) score += 20;
+            // Goal compatibility (15 points)
+            if (currentUser.goal === profile.goal) score += 15;
 
-            // Education compatibility (10 points)
-            if (currentUser.education === profile.education) score += 10;
+            return Math.min(Math.floor(score), 95);
+        }
 
-            return Math.min(Math.floor(score), 95); // Cap at 95% for realism
+        function compatibleSexualities(sexuality1, sexuality2) {
+            const compatiblePairs = {
+                'straight': ['straight'],
+                'gay': ['gay'],
+                'lesbian': ['lesbian'],
+                'bisexual': ['straight', 'gay', 'lesbian', 'bisexual'],
+                'other': ['straight', 'gay', 'lesbian', 'bisexual', 'other']
+            };
+            return compatiblePairs[sexuality1]?.includes(sexuality2) || false;
         }
 
         // Search and Filter
         function filterProfiles() {
             const gender = document.getElementById('filterGender').value;
+            const sexuality = document.getElementById('filterSexuality').value;
             const age = document.getElementById('filterAge').value;
             const location = document.getElementById('filterLocation').value;
 
             let filtered = allProfiles.filter(profile => {
                 if (currentUser && profile.id === currentUser.id) return false;
                 if (gender !== 'all' && profile.gender !== gender) return false;
+                if (sexuality !== 'all' && profile.sexuality !== sexuality) return false;
                 if (location !== 'all' && profile.location !== location) return false;
                 
                 if (age !== 'all') {
@@ -1016,7 +1155,6 @@
 
         function advancedSearch(event) {
             event.preventDefault();
-            // Implement advanced search logic
             showNotification('Advanced search completed!', 'success');
         }
 
@@ -1030,8 +1168,8 @@
             const profile = allProfiles.find(p => p.id === profileId);
             showNotification(`❤️ You liked ${profile.name}!`, 'success');
             
-            // Add to matches if mutual like (simplified)
-            if (Math.random() > 0.7) { // 30% chance of match for demo
+            // Add to matches if mutual like
+            if (Math.random() > 0.7) {
                 if (!matches.find(m => m.id === profileId)) {
                     matches.push(profile);
                     showNotification(`🎉 It's a match! You and ${profile.name} like each other!`, 'success');
@@ -1041,17 +1179,24 @@
 
         function viewProfile(profileId) {
             const profile = allProfiles.find(p => p.id === profileId);
-            alert(`Profile: ${profile.name}\nAge: ${profile.age}\nBio: ${profile.bio}\nInterests: ${profile.interests.join(', ')}`);
+            const locationNames = {
+                'nairobi': 'Nairobi', 'mombasa': 'Mombasa', 'kisumu': 'Kisumu', 'nakuru': 'Nakuru',
+                'eldoret': 'Eldoret', 'foreigner': 'Foreigner'
+            };
+            const sexualityNames = {
+                'straight': 'Straight', 'bisexual': 'Bisexual', 'gay': 'Gay', 
+                'lesbian': 'Lesbian', 'other': 'Other'
+            };
+            
+            alert(`Profile: ${profile.name}\nAge: ${profile.age}\nLocation: ${locationNames[profile.location]}\nSexuality: ${sexualityNames[profile.sexuality]}\nBio: ${profile.bio}\nInterests: ${profile.interests.join(', ')}`);
         }
 
         // UI Management
         function showSection(sectionName) {
-            // Hide all sections
             document.querySelectorAll('.section, #heroSection').forEach(section => {
                 section.style.display = 'none';
             });
 
-            // Show selected section
             if (sectionName === 'hero') {
                 document.getElementById('heroSection').style.display = 'block';
             } else {
@@ -1083,7 +1228,7 @@
                 document.getElementById('authBtn').style.display = 'none';
                 document.getElementById('profileBtn').style.display = 'inline-block';
                 document.getElementById('userWelcome').style.display = 'inline';
-                document.getElementById('userWelcome').textContent = `Hi, ${currentUser.name}!`;
+                document.getElementById('userWelcome').textContent = `Habari, ${currentUser.name}!`;
                 showSection('browse');
             } else {
                 document.getElementById('authBtn').style.display = 'inline-block';
@@ -1094,8 +1239,7 @@
         }
 
         function checkAuthStatus() {
-            // Check if user was previously logged in (demo purposes)
-            const savedUser = localStorage.getItem('matchmaker_user');
+            const savedUser = localStorage.getItem('wetlands_user');
             if (savedUser) {
                 currentUser = JSON.parse(savedUser);
                 updateUI();
